@@ -1,3 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+@theme {
+    --color-background: #EEF2F5;
+
+    --color-surface-gray-100: #DCE2E7;
+    --color-surface-gray-200: #CBD2D9;
+    --color-surface-gray-300: #9AA5B1;
+    --color-surface-gray-400: #6B7C8F;
+    --color-surface-gray-500: #3E4C59;
+    --color-surface-gray-600: #1F2933;
+    --color-surface-green: #F1F8EA;
+    --color-surface-blue: #E6F6F9;
+    --color-surface-red: #FDECEC;
+    --color-surface-yellow: #FEF9C3;
+
+    --color-ui-green: #7FBF2F;
+    --color-ui-green-hover: #6DA628;
+    --color-ui-green-active: #5B8C21;
+
+    --color-ui-blue: #00A3BF;
+    --color-ui-blue-hover: #008DA5;
+    --color-ui-blue-active: #007688;
+
+    --color-ui-red: #E5484D;
+    --color-ui-red-hover: #D63C41;
+    --color-ui-red-active: #B83236;
+
+    --color-ui-yellow: #FACC15;
+    --color-ui-yellow-hover: #EAB308;
+    --color-ui-yellow-active: #CA8A04;
+
+    --font-montserrat: 'Montserrat', sans-serif;    
+    --font-poppins: 'Poppins', sans-serif;    
+    --font-inter: 'Inter', sans-serif;    
+}
+
+@layer base {
+    .font-montserrat {
+        letter-spacing: 0.05em;
+        font-weight: 600;
+    }
+    .font-poppins {
+        letter-spacing: 0.05em;
+        font-weight: 500;
+    }
+    .font-inter {
+        letter-spacing: 0.05em;
+    }
+}
