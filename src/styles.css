@@ -48,3 +48,20 @@
         letter-spacing: 0.05em;
     }
 }
+
+.animated-aside {
+  background: linear-gradient(
+    to bottom,
+    var(--color-surface-green),
+    var(--color-surface-blue),
+    var(--color-surface-green)
+  );
+  background-size: 100% 200%;
+  animation: gradient-flow 6s linear infinite;
+}
+
+@keyframes gradient-flow {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 0% 100%; }
+    100% { background-position: 0% 0%; }
+}

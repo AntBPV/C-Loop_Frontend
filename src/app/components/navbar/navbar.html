@@ -1,0 +1,40 @@
+<nav
+  (mouseenter)="isHovered.set(true)"
+  (mouseleave)="isHovered.set(false)"
+  [class.shadow-navbar]="isScrolled() || isHovered()"
+  class="w-[70%] mx-auto px-6 py-3 rounded-[15px] bg-background transition-shadow duration-300">  
+    
+  <div class="flex items-center justify-between gap-2">
+    <!-- Lado izquierdo -->
+     <div class="flex items-center gap-2">
+        <button class="flex items-center px-3 py-2">
+          <img src="vectors/UCC-Vector.svg" alt="C-Loop Logo" class="h-8 w-auto" />
+        </button>
+
+        <button class="flex items-center gap-1 px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
+          <span class="font-inter text-surface-gray-600">Explorar</span>
+          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5"/>
+        </button>
+
+        <button class="flex items-center gap-1 px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
+          <span class="font-inter text-surface-gray-600">Recursos</span>
+          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5"/>
+        </button>
+
+        <button class="flex items-center gap-1 px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
+          <span class="font-inter text-surface-gray-600">Desarrolladores</span>
+          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5"/>
+        </button>
+     </div>
+
+     <!-- Lado Derecho -->
+      <div>
+        <button
+          [class.btn-login-active]="isScrolled() || isHovered()" 
+          class="btn-login px-8 py-2 font-poppins rounded-lg transition-all duration-300">
+          Inicia Sesión
+        </button>
+      </div>
+  </div>
+
+</nav>
