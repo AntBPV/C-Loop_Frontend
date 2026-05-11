@@ -3,7 +3,7 @@
 }
 
 .btn-login {
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   color: var(--color-surface-gray-600);
 }
 
@@ -14,5 +14,24 @@
 
 .btn-login-active:hover {
   background-color: var(--color-ui-blue);
-  color: white;
+  color: var(--color-background);
+}
+
+.separator-gradient {
+  background: linear-gradient(
+    to right,
+    var(--color-ui-green),
+    var(--color-ui-blue)
+  );
+}
+
+.dropdown-menu {
+  opacity: 0;
+  transform: translateY(-8px) translateX(-50%);
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+.dropdown-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(-50%);
 }

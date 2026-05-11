@@ -7,23 +7,29 @@
   <div class="flex items-center justify-between gap-2">
     <!-- Lado izquierdo -->
      <div class="flex items-center gap-2">
-        <button class="flex items-center px-3 py-2">
+        <button class="flex items-center px-3 py-2 cursor-pointer">
           <img src="vectors/UCC-Vector.svg" alt="C-Loop Logo" class="h-8 w-auto" />
         </button>
 
-        <button class="flex items-center gap-1 px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
+        <button
+          (click)="toggleMenu('explorar')" 
+          class="flex items-center gap-1 px-3 py-2 cursor-pointer rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
           <span class="font-inter text-surface-gray-600">Explorar</span>
-          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5"/>
+          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5 transition-transform duration-200" [class.rotate-180]="activeMenu() === 'explorar'"/>
         </button>
 
-        <button class="flex items-center gap-1 px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
+        <button
+          (click)="toggleMenu('recursos')" 
+          class="flex items-center gap-1 px-3 py-2 cursor-pointer rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
           <span class="font-inter text-surface-gray-600">Recursos</span>
-          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5"/>
+          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5 transition-transform duration-200" [class.rotate-180]="activeMenu() === 'recursos'"/>
         </button>
 
-        <button class="flex items-center gap-1 px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
+        <button 
+          (click)="toggleMenu('desarrolladores')"
+          class="flex items-center gap-1 px-3 py-2 cursor-pointer rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
           <span class="font-inter text-surface-gray-600">Desarrolladores</span>
-          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5"/>
+          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5 transition-transform duration-200" [class.rotate-180]="activeMenu() === 'desarrolladores'"/>
         </button>
      </div>
 
@@ -31,10 +37,33 @@
       <div>
         <button
           [class.btn-login-active]="isScrolled() || isHovered()" 
-          class="btn-login px-8 py-2 font-poppins rounded-lg transition-all duration-300">
+          class="btn-login px-8 py-2 font-poppins rounded-lg cursor-pointer transition-all duration-300">
           Inicia Sesión
         </button>
       </div>
   </div>
 
+  <!-- Dropdowns -->
+  @if (activeMenu() !== null) {
+    <div
+      class="dropdown-menu absolute left-1/2 -translate-x-1/2 top-full mt-2 w-140 bg-background rounded-2xl shadow-navbar p-4 z-50"
+      [class.dropdown-visible]="isMenuVisible()">
+      <div class="grid grid-cols-2 gap-3">
+        @for (item of menus[activeMenu()!]; track item.label) {
+          <div class="flex flex-row gap-3 p-3 rounded-xl hover:bg-surface-gray-100 transition-colors duration-200 cursor-pointer">
+            <!-- Icono a la izquierda -->
+            <div class="w-10 h-10 min-w-10 rounded-lg bg-surface-gray-100 flex items-center justify-center">
+              <img [src]="item.icon" alt="" class="w-5 h-5" />
+            </div>
+            <!-- Contenido a la derecha -->
+            <div class="flex flex-col gap-1 flex-1">
+              <span class="font-inter text-surface-gray-600 text-sm">{{ item.label }}</span>
+              <div class="separator-gradient h-1 w-full"></div>
+              <span class="font-inter text-surface-gray-400 text-sm">{{ item.description }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
 </nav>

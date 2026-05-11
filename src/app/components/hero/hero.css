@@ -1,0 +1,19 @@
+.gradient-title {
+  background: linear-gradient(
+    to right,
+    var(--color-ui-blue),
+    var(--color-ui-green),
+    var(--color-ui-blue)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 5s linear infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
