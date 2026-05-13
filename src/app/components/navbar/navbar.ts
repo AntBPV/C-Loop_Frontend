@@ -1,10 +1,12 @@
 import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 interface MenuItem {
   label: string,
   description: string,
-  icon: string
+  icon: string,
+  fragment?: string
 }
 
 interface MenuData {
@@ -13,7 +15,7 @@ interface MenuData {
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -32,10 +34,10 @@ export class Navbar {
     ],
     recursos: [
       { label: 'Guía de uso', description: 'Aprende a usar C-Loop paso a paso.', icon: 'public/icons/guia.svg' },
-      { label: 'Preguntas frecuentes', description: 'Resuelve las dudas más comunes.', icon: 'public/icons/faq.svg' },
+      { label: 'Preguntas frecuentes', description: 'Resuelve las dudas más comunes.', icon: 'public/icons/faq.svg', fragment: 'faq' },
     ],
     desarrolladores: [
-      { label: 'Quienes Somos', description: 'Conoce quien esta detras de C-Loop.', icon: 'public/icons/meet.svg' },
+      { label: 'Quienes Somos', description: 'Conoce quien esta detras de C-Loop.', icon: 'public/icons/meet.svg', fragment: 'quienes-somos' },
       { label: 'Documentación', description: 'Accede a la documentación técnica de la API.', icon: 'public/icons/docs.svg' },
       { label: 'Repositorio', description: 'Revisa el código fuente del proyecto.', icon: 'public/icons/repo.svg' },
     ],

@@ -1,0 +1,46 @@
+<div class="convenio-card-wrapper cursor-pointer" (click)="onCardClick()">
+
+  <!-- Forma SVG de fondo -->
+  <svg class="card-svg" viewBox="0 0 668 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%">
+        <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="var(--color-surface-gray-300)" flood-opacity="0.5"/>
+        </filter>
+    </defs>
+    <path
+        class="card-path transition-all duration-200"
+        filter="url(#card-shadow)"
+        d="M509 6C517.284 6 524 12.7157 524 21V127.969C524 136.253 530.716 142.969 539 142.969H643C651.284 142.969 658 149.684 658 157.969V271C658 279.284 651.284 286 643 286H25C16.7157 286 10 279.284 10 271V21C10 12.7157 16.7157 6 25 6H509Z"
+        fill="var(--color-background)"
+        stroke="var(--color-surface-gray-200)"
+        stroke-width="2"/>
+    <rect x="538" y="6" width="120" height="120" rx="15" [attr.fill]="badgeColor"/>
+    <foreignObject x="568" y="36" width="60" height="60">
+        <app-svg-icon
+        [src]="convenio.iconPath ?? config.icon"
+        [color]="iconColor"
+        xmlns="http://www.w3.org/1999/xhtml">
+        </app-svg-icon>
+    </foreignObject>
+  </svg>
+
+  <!-- Contenido del texto -->
+  <div class="card-content">
+    <h3 class="font-montserrat text-surface-gray-600 text-lg leading-snug">
+      {{ convenio.titulo }}
+    </h3> 
+    <div class="bg-surface-gray-600 h-1 rounded w-full my-2"></div>
+    <div class="flex flex-col gap-1">
+      <p class="font-poppins text-surface-gray-500 text-sm">
+        <span class="text-surface-gray-500">Empresa:</span> {{ convenio.empresa }}
+      </p>
+      <p class="font-poppins text-surface-gray-500 text-sm">
+        <span class="text-surface-gray-500">Tipo:</span> {{ convenio.tipo }}
+      </p>
+      <p class="font-poppins text-surface-gray-500 text-lg">
+        <span class="text-surface-gray-500">Finaliza en:</span> {{ convenio.fechaVencimiento }}
+      </p>
+    </div>
+  </div>
+
+</div>

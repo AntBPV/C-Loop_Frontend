@@ -36,6 +36,7 @@
      <!-- Lado Derecho -->
       <div>
         <button
+          routerLink="/login"
           [class.btn-login-active]="isScrolled() || isHovered()" 
           class="btn-login px-8 py-2 font-poppins rounded-lg cursor-pointer transition-all duration-300">
           Inicia Sesión
@@ -50,7 +51,12 @@
       [class.dropdown-visible]="isMenuVisible()">
       <div class="grid grid-cols-2 gap-3">
         @for (item of menus[activeMenu()!]; track item.label) {
-          <div class="flex flex-row gap-3 p-3 rounded-xl hover:bg-surface-gray-100 transition-colors duration-200 cursor-pointer">
+          <div 
+            class="flex flex-row gap-3 p-3 rounded-xl hover:bg-surface-gray-100 transition-colors duration-200 cursor-pointer"
+            [routerLink]="item.fragment ? '/' : null"
+            [fragment]="item.fragment ?? undefined"
+            (click)="closeMenuAnimated()"
+            >
             <!-- Icono a la izquierda -->
             <div class="w-10 h-10 min-w-10 rounded-lg bg-surface-gray-100 flex items-center justify-center">
               <img [src]="item.icon" alt="" class="w-5 h-5" />
@@ -58,7 +64,7 @@
             <!-- Contenido a la derecha -->
             <div class="flex flex-col gap-1 flex-1">
               <span class="font-inter text-surface-gray-600 text-sm">{{ item.label }}</span>
-              <div class="separator-gradient h-1 w-full"></div>
+              <div class="separator-gradient h-1 rounded w-full"></div>
               <span class="font-inter text-surface-gray-400 text-sm">{{ item.description }}</span>
             </div>
           </div>
