@@ -1,12 +1,15 @@
 import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { ScrollService } from '../../core/services/scroll';
 
 interface MenuItem {
-  label: string,
-  description: string,
-  icon: string,
-  fragment?: string
+  label: string;
+  description: string;
+  icon: string;
+  fragment?: string;      // auto-scroll
+  routerLink?: string;    // Page
+  externalUrl?: string;
 }
 
 interface MenuData {
@@ -20,6 +23,19 @@ interface MenuData {
   styleUrl: './navbar.css',
 })
 export class Navbar {
+  constructor(private scrollService: ScrollService, private router: Router) {}
+
+  handleItemClick(item: MenuItem) {
+    this.closeMenuAnimated();
+    if (item.fragment) {
+      this.scrollService.scrollTo(item.fragment);
+    } else if (item.routerLink) {
+      this.router.navigate([item.routerLink]);
+    } else if (item.externalUrl) {
+      window.open(item.externalUrl, '_blank');
+    }
+  }
+
   isScrolled = signal(false);
   isHovered = signal(false);
   activeMenu = signal<string | null>(null);

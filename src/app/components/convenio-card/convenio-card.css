@@ -19,6 +19,7 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: 4%;
+  overflow: visible;
 }
 
 .badge-icon {

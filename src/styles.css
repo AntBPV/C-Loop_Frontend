@@ -69,3 +69,8 @@
 html {
     scroll-behavior: smooth;
 }
+
+#quienes-somos,
+#faq {
+  scroll-margin-top: 500px;
+}
