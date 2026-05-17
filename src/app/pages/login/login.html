@@ -1,0 +1,56 @@
+<div class="login-bg min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-md bg-background rounded-2xl border border-surface-gray-200 p-8 flex flex-col gap-6 shadow-lg">
+
+    <!-- Logo -->
+    <div class="flex flex-col items-center gap-2">
+      <img src="vectors/UCC-Vector.svg" alt="C-Loop" class="h-10 w-auto" />
+      <h1 class="font-montserrat text-2xl text-surface-gray-600">Inicia sesión</h1>
+      <p class="font-inter text-surface-gray-400 text-sm text-center">Accede a tu cuenta institucional</p>
+    </div>
+
+    <!-- Error -->
+    @if (error()) {
+      <div class="px-4 py-3 rounded-lg bg-surface-red border border-ui-red">
+        <p class="font-inter text-ui-red text-sm">{{ error() }}</p>
+      </div>
+    }
+
+    <!-- Formulario -->
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Correo institucional</label>
+        <input
+          type="email"
+          [(ngModel)]="email"
+          placeholder="correo@campusucc.edu.co"
+          class="px-4 py-2 rounded-lg border-2 border-surface-gray-200 bg-background font-inter text-surface-gray-600 text-sm outline-none focus:border-ui-blue transition-colors duration-200" />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Contraseña</label>
+        <input
+          type="password"
+          [(ngModel)]="password"
+          placeholder="••••••••"
+          class="px-4 py-2 rounded-lg border-2 border-surface-gray-200 bg-background font-inter text-surface-gray-600 text-sm outline-none focus:border-ui-blue transition-colors duration-200" />
+      </div>
+
+      <button
+        (click)="onSubmit()"
+        [disabled]="isLoading()"
+        class="w-full py-2 rounded-lg bg-ui-blue font-inter text-white text-sm transition-colors duration-200 hover:bg-ui-blue-hover active:bg-ui-blue-active disabled:opacity-50">
+        {{ isLoading() ? 'Cargando...' : 'Iniciar sesión' }}
+      </button>
+    </div>
+
+    <!-- Separador -->
+    <div class="separator-gradient h-1 rounded w-full"></div>
+
+    <!-- Link registro -->
+    <p class="font-inter text-surface-gray-400 text-sm text-center">
+      ¿No tienes cuenta?
+      <a routerLink="/register" class="text-ui-blue hover:text-ui-blue-hover transition-colors duration-200">Regístrate</a>
+    </p>
+
+  </div>
+</div>

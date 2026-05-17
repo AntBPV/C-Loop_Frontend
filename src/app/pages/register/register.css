@@ -1,0 +1,20 @@
+.register-bg {
+  background: linear-gradient(
+    to bottom,
+    var(--color-surface-green),
+    var(--color-surface-blue),
+    var(--color-surface-green)
+  );
+  background-size: 100% 200%;
+  animation: gradient-flow 5s linear infinite;
+}
+
+@keyframes gradient-flow {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+.separator-gradient {
+  background: linear-gradient(to right, var(--color-ui-green), var(--color-ui-blue));
+}

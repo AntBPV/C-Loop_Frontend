@@ -1,0 +1,96 @@
+<div class="register-bg min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-md bg-background rounded-2xl border border-surface-gray-200 p-8 flex flex-col gap-6 shadow-lg">
+
+    <!-- Logo -->
+    <div class="flex flex-col items-center gap-2">
+      <img src="vectors/UCC-Vector.svg" alt="C-Loop" class="h-10 w-auto" />
+      <h1 class="font-montserrat text-2xl text-surface-gray-600">Crear cuenta</h1>
+      <p class="font-inter text-surface-gray-400 text-sm text-center">Usa tu correo institucional para registrarte</p>
+    </div>
+
+    <!-- Error -->
+    @if (error()) {
+      <div class="px-4 py-3 rounded-lg bg-surface-red border border-ui-red">
+        <p class="font-inter text-ui-red text-sm">{{ error() }}</p>
+      </div>
+    }
+
+    <!-- Éxito -->
+    @if (success()) {
+      <div class="px-4 py-3 rounded-lg bg-surface-green border border-ui-green">
+        <p class="font-inter text-ui-green text-sm">{{ success() }}</p>
+      </div>
+    }
+
+    <div class="flex flex-col gap-4">
+
+      <!-- Fase 1 -->
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Correo institucional</label>
+        <div class="flex gap-2">
+          <input
+            type="email"
+            [(ngModel)]="email"
+            [disabled]="codeSent()"
+            placeholder="correo@campusucc.edu.co"
+            class="flex-1 px-4 py-2 rounded-lg border-2 border-surface-gray-200 bg-background font-inter text-surface-gray-600 text-sm outline-none focus:border-ui-blue transition-colors duration-200 disabled:opacity-50" />
+          <button
+            (click)="requestCode()"
+            [disabled]="isRequestingCode() || codeSent()"
+            class="px-4 py-2 rounded-lg border-2 border-ui-blue font-inter text-ui-blue text-sm transition-colors duration-200 hover:bg-ui-blue hover:text-white disabled:opacity-50">
+            {{ isRequestingCode() ? '...' : codeSent() ? 'Enviado' : 'Enviar código' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Fase 2 -->
+      @if (codeSent()) {
+        <div class="flex flex-col gap-1">
+          <label class="font-inter text-surface-gray-600 text-sm">Nombre completo</label>
+          <input
+            type="text"
+            [(ngModel)]="fullName"
+            placeholder="Tu nombre completo"
+            class="px-4 py-2 rounded-lg border-2 border-surface-gray-200 bg-background font-inter text-surface-gray-600 text-sm outline-none focus:border-ui-blue transition-colors duration-200" />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="font-inter text-surface-gray-600 text-sm">Contraseña</label>
+          <input
+            type="password"
+            [(ngModel)]="password"
+            placeholder="••••••••"
+            class="px-4 py-2 rounded-lg border-2 border-surface-gray-200 bg-background font-inter text-surface-gray-600 text-sm outline-none focus:border-ui-blue transition-colors duration-200" />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="font-inter text-surface-gray-600 text-sm">Código de verificación</label>
+          <input
+            type="text"
+            [(ngModel)]="code"
+            placeholder="000000"
+            maxlength="6"
+            class="px-4 py-2 rounded-lg border-2 border-surface-gray-200 bg-background font-inter text-surface-gray-600 text-sm outline-none focus:border-ui-blue transition-colors duration-200 tracking-widest" />
+        </div>
+
+        <button
+          (click)="onSubmit()"
+          [disabled]="isRegistering()"
+          class="w-full py-2 rounded-lg bg-ui-blue font-inter text-white text-sm transition-colors duration-200 hover:bg-ui-blue-hover active:bg-ui-blue-active disabled:opacity-50">
+          {{ isRegistering() ? 'Registrando...' : 'Crear cuenta' }}
+        </button>
+      }
+
+    </div>
+
+    <!-- Separador -->
+    <div class="separator-gradient h-1 rounded w-full"></div>
+
+    <!-- Link login -->
+    <p class="font-inter text-surface-gray-400 text-sm text-center">
+      ¿Ya tienes cuenta?
+      <a routerLink="/login" class="text-ui-blue hover:text-ui-blue-hover transition-colors duration-200">Inicia sesión</a>
+    </p>
+
+  </div>
+</div>

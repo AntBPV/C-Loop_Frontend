@@ -1,0 +1,41 @@
+<section class="faq-bg w-full py-20 px-8">
+  <div class="max-w-3xl mx-auto flex flex-col gap-10">
+
+    <!-- Título -->
+    <div class="flex flex-col items-center gap-3">
+      <h2 class="font-montserrat text-4xl text-surface-gray-500 text-center">Preguntas frecuentes</h2>
+      <p class="font-poppins text-surface-gray-400 text-lg text-center">
+        Todo lo que necesitas saber antes de empezar.
+      </p>
+      <div class="separator-gradient h-1 rounded w-full mt-2"></div>
+    </div>
+
+    <!-- Acordeón -->
+    <div class="flex flex-col gap-3">
+      @for (faq of faqs; track faq.question; let i = $index) {
+        <div class="rounded-2xl border-2 border-surface-gray-200 overflow-hidden transition-all duration-300">
+
+          <!-- Pregunta -->
+          <button
+            (click)="toggle(i)"
+            class="w-full flex items-center justify-between px-6 py-4 text-left bg-background hover:bg-surface-gray-100 transition-colors duration-200">
+            <span class="font-poppins text-surface-gray-500">{{ faq.question }}</span>
+            <img
+              src="vectors/angle-small-down.svg"
+              alt=""
+              class="h-5 w-5 transition-transform duration-300"
+              [class.rotate-180]="activeIndex() === i" />
+          </button>
+
+          <!-- Respuesta -->
+          @if (activeIndex() === i) {
+            <div class="px-6 pb-5 bg-background">
+              <div class="separator-gradient h-1 rounded w-full mb-4"></div>
+              <p class="font-poppins text-surface-gray-500 text-sm leading-relaxed">{{ faq.answer }}</p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>
