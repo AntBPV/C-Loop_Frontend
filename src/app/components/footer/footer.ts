@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ScrollService } from '../../core/services/scroll';
+import { ScrollService } from '../../core/services/scroll-service';
 
 @Component({
   selector: 'app-footer',

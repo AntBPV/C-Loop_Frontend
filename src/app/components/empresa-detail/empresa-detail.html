@@ -1,0 +1,94 @@
+@if (empresaId) {
+  <div class="detail-panel flex flex-col gap-6">
+
+    @if (isLoading()) {
+      <p class="font-poppins text-surface-gray-400 text-sm">Cargando...</p>
+    } @else if (error()) {
+      <p class="font-poppins text-ui-red text-sm">{{ error() }}</p>
+    } @else if (empresa()) {
+
+      <!-- Header -->
+      <div class="flex flex-col gap-1">
+        <p class="font-inter text-surface-gray-400 text-xs">{{ empresa()!.nit }}</p>
+        <h2 class="font-montserrat text-surface-gray-600 text-xl">{{ empresa()!.businessName }}</h2>
+        <p class="font-poppins text-surface-gray-500 text-sm">{{ empresa()!.tradeName }}</p>
+      </div>
+
+      <div class="separator h-px w-full"></div>
+
+      <!-- Pestañas -->
+      <div class="flex gap-2">
+        <button
+          (click)="setTab('info')"
+          class="tab-btn font-inter text-sm px-4 py-2 rounded-lg transition-colors duration-200"
+          [class.tab-active]="tabActiva() === 'info'">
+          Información
+        </button>
+        <button
+          (click)="setTab('historial')"
+          class="tab-btn font-inter text-sm px-4 py-2 rounded-lg transition-colors duration-200"
+          [class.tab-active]="tabActiva() === 'historial'">
+          Historial
+        </button>
+      </div>
+
+      <!-- Tab: Información -->
+      @if (tabActiva() === 'info') {
+        <div class="flex flex-col gap-3">
+          <div class="info-row">
+            <span class="font-inter text-surface-gray-400 text-sm">Estado</span>
+            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.status }}</span>
+          </div>
+          <div class="info-row">
+            <span class="font-inter text-surface-gray-400 text-sm">NIT</span>
+            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.nit }}</span>
+          </div>
+          <div class="info-row">
+            <span class="font-inter text-surface-gray-400 text-sm">Razón social</span>
+            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.businessName }}</span>
+          </div>
+          <div class="info-row">
+            <span class="font-inter text-surface-gray-400 text-sm">Nombre comercial</span>
+            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.tradeName }}</span>
+          </div>
+          <div class="info-row">
+            <span class="font-inter text-surface-gray-400 text-sm">Representante legal</span>
+            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.legalRepresentativeName }}</span>
+          </div>
+          <div class="info-row">
+            <span class="font-inter text-surface-gray-400 text-sm">Correo</span>
+            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.contactEmail }}</span>
+          </div>
+          <div class="info-row">
+            <span class="font-inter text-surface-gray-400 text-sm">Teléfono</span>
+            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.contactPhone }}</span>
+          </div>
+          <div class="info-row">
+            <span class="font-inter text-surface-gray-400 text-sm">Dirección</span>
+            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.address }}</span>
+          </div>
+          <div class="info-row">
+            <span class="font-inter text-surface-gray-400 text-sm">Tipo identificación</span>
+            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.identificationType }}</span>
+          </div>
+          <div class="info-row">
+            <span class="font-inter text-surface-gray-400 text-sm">Creado</span>
+            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.createdAt }}</span>
+          </div>
+          @if (empresa()!.validatedAt) {
+            <div class="info-row">
+              <span class="font-inter text-surface-gray-400 text-sm">Validado</span>
+              <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.validatedAt }}</span>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Tab: Historial -->
+      @if (tabActiva() === 'historial') {
+        <p class="font-poppins text-surface-gray-400 text-sm">Próximamente.</p>
+      }
+
+    }
+  </div>
+}

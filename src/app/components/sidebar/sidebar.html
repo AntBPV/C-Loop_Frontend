@@ -1,0 +1,54 @@
+<nav class="sidebar">
+
+  <!-- Logo -->
+  <div class="sidebar-logo">
+    <img src="vectors/UCC-Vector.svg" alt="C-Loop" class="h-10 w-auto" />
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- Links -->
+  <div class="flex flex-col gap-2">
+
+    <a
+    routerLink="convenios"
+    routerLinkActive="nav-item-active"
+    #conveniosLink="routerLinkActive"
+    class="nav-item">
+      <span class="text-xl">
+        <app-svg-icon
+          [src]="conveniosLink.isActive ? 'icons/convenios-button-active.svg' : 'icons/convenios-button.svg'"
+          color="currentColor"/>
+      </span>
+      <span class="font-poppins">Convenios</span>
+    </a>
+
+    <a
+    routerLink="empresas"
+    routerLinkActive="nav-item-active"
+    #empresasLink="routerLinkActive"
+    class="nav-item">
+      <span class="text-2xl">
+        <app-svg-icon
+          [src]="empresasLink.isActive ? 'icons/empresas-button-active.svg' : 'icons/empresas-button.svg'"
+          color="currentColor"/>
+      </span>
+      <span class="font-poppins">Empresas</span>
+    </a>
+
+  </div>
+
+  <!-- Spacer -->
+  <div class="flex-1"></div>
+
+  <div class="separator"></div>
+
+  <!-- Cerrar sesión -->
+  <a routerLink="/" class="nav-item text-ui-red">
+    <span class="text-2xl">
+      <app-svg-icon src="icons/logout.svg" color="var(--color-ui-red)"/>
+    </span>
+    <span class="font-poppins text-sm">Cerrar sesión</span>
+  </a>
+
+</nav>

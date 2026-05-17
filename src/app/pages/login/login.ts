@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../core/services/auth';
+import { AuthService } from '../../core/services/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -24,14 +24,17 @@ export class Login {
     this.error.set(null);
 
     this.authService.login({ email: this.email, password: this.password }).subscribe({
-      next: () => {
+      next: (response) => {
+        console.log('Login response:', response);
         this.isLoading.set(false);
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       },
-      error: () => {
+      error: (err) => {
+        console.log('Status:', err.status);
+        console.log('Error completo:', err);
         this.isLoading.set(false);
         this.error.set('Correo o contraseña incorrectos.');
-      }
+      },
     });
   }
 }

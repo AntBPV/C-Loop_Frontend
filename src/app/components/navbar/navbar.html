@@ -2,8 +2,8 @@
   (mouseenter)="isHovered.set(true)"
   (mouseleave)="isHovered.set(false)"
   [class.shadow-navbar]="isScrolled() || isHovered()"
-  class="w-[70%] mx-auto px-6 py-3 rounded-[15px] bg-background transition-shadow duration-300">  
-    
+  class="w-[70%] mx-auto px-6 py-3 rounded-[15px] bg-background transition-shadow duration-300">
+
   <div class="flex items-center justify-between gap-2">
     <!-- Lado izquierdo -->
      <div class="flex items-center gap-2">
@@ -12,24 +12,24 @@
         </button>
 
         <button
-          (click)="toggleMenu('explorar')" 
+          (click)="toggleMenu('explorar')"
           class="flex items-center gap-1 px-3 py-2 cursor-pointer rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
           <span class="font-inter text-surface-gray-600">Explorar</span>
-          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5 transition-transform duration-200" [class.rotate-180]="activeMenu() === 'explorar'"/>
+          <app-svg-icon src="vectors/angle-small-down.svg" color="var(--color-surface-gray-600)" class="transition-transform duration-200" [class.rotate-180]="activeMenu() === 'explorar'"/>
         </button>
 
         <button
-          (click)="toggleMenu('recursos')" 
+          (click)="toggleMenu('recursos')"
           class="flex items-center gap-1 px-3 py-2 cursor-pointer rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
           <span class="font-inter text-surface-gray-600">Recursos</span>
-          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5 transition-transform duration-200" [class.rotate-180]="activeMenu() === 'recursos'"/>
+          <app-svg-icon src="vectors/angle-small-down.svg" color="var(--color-surface-gray-600)" class="transition-transform duration-200" [class.rotate-180]="activeMenu() === 'recursos'"/>
         </button>
 
-        <button 
+        <button
           (click)="toggleMenu('desarrolladores')"
           class="flex items-center gap-1 px-3 py-2 cursor-pointer rounded-lg transition-colors duration-200 hover:bg-surface-gray-100">
           <span class="font-inter text-surface-gray-600">Desarrolladores</span>
-          <img src="vectors/angle-small-down.svg" alt="" class="h-5 w-5 transition-transform duration-200" [class.rotate-180]="activeMenu() === 'desarrolladores'"/>
+          <app-svg-icon src="vectors/angle-small-down.svg" color="var(--color-surface-gray-600)" class="transition-transform duration-200" [class.rotate-180]="activeMenu() === 'desarrolladores'"/>
         </button>
      </div>
 
@@ -37,7 +37,7 @@
       <div>
         <button
           routerLink="/login"
-          [class.btn-login-active]="isScrolled() || isHovered()" 
+          [class.btn-login-active]="isScrolled() || isHovered()"
           class="btn-login px-8 py-2 font-poppins rounded-lg cursor-pointer transition-all duration-300">
           Inicia Sesión
         </button>
@@ -51,7 +51,7 @@
       [class.dropdown-visible]="isMenuVisible()">
       <div class="grid grid-cols-2 gap-3">
         @for (item of menus[activeMenu()!]; track item.label) {
-          <div 
+          <div
             class="flex flex-row gap-3 p-3 rounded-xl hover:bg-surface-gray-100 transition-colors duration-200 cursor-pointer"
             (click)="handleItemClick(item)"
             >

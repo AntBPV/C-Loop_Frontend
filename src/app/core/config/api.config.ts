@@ -1,6 +1,6 @@
 export const API_CONFIG = {
-    // TODO: Cambiar por la URL real
-  baseUrl: 'http://localhost:3000',
+  // TODO: Cambiar por la URL real
+  baseUrl: 'https://backend-proyecto-de-grado.onrender.com',
   endpoints: {
     auth: {
       requestCode: '/api/auth/register-code/request',
@@ -36,17 +36,23 @@ export const API_CONFIG = {
       history: (id: string) => `/api/convenios/${id}/history`,
       submit: (id: string) => `/api/convenios/${id}/submit`,
       previewPdf: (id: string) => `/api/convenios/${id}/preview-pdf`,
-      versionPdf: (convenioId: string, versionId: string) => `/api/convenios/${convenioId}/versions/${versionId}/pdf`,
+      versionPdf: (convenioId: string, versionId: string) =>
+        `/api/convenios/${convenioId}/versions/${versionId}/pdf`,
       documents: (id: string) => `/api/convenios/${id}/documents`,
-      downloadDocument: (convenioId: string, documentId: string) => `/api/convenios/${convenioId}/documents/${documentId}/pdf`,
+      downloadDocument: (convenioId: string, documentId: string) =>
+        `/api/convenios/${convenioId}/documents/${documentId}/pdf`,
     },
     companyDocuments: {
       request: (convenioId: string) => `/api/convenios/${convenioId}/request-company-documents`,
-      listRequests: (convenioId: string) => `/api/convenios/${convenioId}/company-document-requests`,
+      listRequests: (convenioId: string) =>
+        `/api/convenios/${convenioId}/company-document-requests`,
       listDocuments: (convenioId: string) => `/api/convenios/${convenioId}/company-documents`,
-      approve: (convenioId: string, documentId: string) => `/api/convenios/${convenioId}/company-documents/${documentId}/approve`,
-      observe: (convenioId: string, documentId: string) => `/api/convenios/${convenioId}/company-documents/${documentId}/observe`,
-      requestCorrection: (convenioId: string) => `/api/convenios/${convenioId}/company-documents/request-correction`,
+      approve: (convenioId: string, documentId: string) =>
+        `/api/convenios/${convenioId}/company-documents/${documentId}/approve`,
+      observe: (convenioId: string, documentId: string) =>
+        `/api/convenios/${convenioId}/company-documents/${documentId}/observe`,
+      requestCorrection: (convenioId: string) =>
+        `/api/convenios/${convenioId}/company-documents/request-correction`,
       discard: (convenioId: string) => `/api/convenios/${convenioId}/company-documents/discard`,
       markApproved: (convenioId: string) => `/api/convenios/${convenioId}/mark-documents-approved`,
     },
@@ -78,5 +84,5 @@ export const API_CONFIG = {
       adminSummary: '/api/dashboard/admin/summary',
       recentActivity: '/api/dashboard/recent-activity',
     },
-  }
+  },
 };

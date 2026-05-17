@@ -1,0 +1,19 @@
+.overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.overlay-panel {
+  position: relative;
+  background: var(--color-background);
+  border-radius: 20px;
+  width: 60%;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 32px;
+}

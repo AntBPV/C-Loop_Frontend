@@ -30,9 +30,9 @@
     --color-ui-yellow-hover: #EAB308;
     --color-ui-yellow-active: #CA8A04;
 
-    --font-montserrat: 'Montserrat', sans-serif;    
-    --font-poppins: 'Poppins', sans-serif;    
-    --font-inter: 'Inter', sans-serif;    
+    --font-montserrat: 'Montserrat', sans-serif;
+    --font-poppins: 'Poppins', sans-serif;
+    --font-inter: 'Inter', sans-serif;
 }
 
 @layer base {
@@ -73,4 +73,8 @@ html {
 #quienes-somos,
 #faq {
   scroll-margin-top: 500px;
+}
+
+.separator-gradient {
+  background: linear-gradient(to right, var(--color-ui-green), var(--color-ui-blue));
 }

@@ -1,0 +1,64 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { API_CONFIG } from '../config/api.config';
+import { tap } from 'rxjs/operators';
+
+export interface RequestCodePayload {
+  email: string;
+}
+
+export interface RegisterPayload {
+  fullName: string;
+  email: string;
+  password: string;
+  code: string;
+}
+
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private base = API_CONFIG.baseUrl;
+
+  constructor(private http: HttpClient) {}
+
+  requestCode(payload: RequestCodePayload): Observable<any> {
+    return this.http.post(`${this.base}${API_CONFIG.endpoints.auth.requestCode}`, payload, {
+      responseType: 'text',
+    });
+  }
+
+  register(payload: RegisterPayload): Observable<any> {
+    return this.http
+      .post(`${this.base}${API_CONFIG.endpoints.auth.register}`, payload, {
+        responseType: 'text',
+      })
+      .pipe(
+        tap((response: any) => {
+          const parsed = JSON.parse(response);
+          if (parsed.token) {
+            localStorage.setItem('token', parsed.token);
+          }
+        }),
+      );
+  }
+
+  login(payload: LoginPayload): Observable<any> {
+    return this.http
+      .post(`${this.base}${API_CONFIG.endpoints.auth.login}`, payload, {
+        responseType: 'text',
+      })
+      .pipe(
+        tap((response: any) => {
+          const parsed = JSON.parse(response);
+          if (parsed.token) {
+            localStorage.setItem('token', parsed.token);
+          }
+        }),
+      );
+  }
+}

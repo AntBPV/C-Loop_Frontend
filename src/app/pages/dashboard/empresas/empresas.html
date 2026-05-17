@@ -1,0 +1,94 @@
+<div class="flex flex-col gap-6">
+
+  <!-- Filtros -->
+  <div class="flex items-center gap-3">
+    @for (filtro of filtros; track filtro.estado) {
+      <button
+        (click)="toggleFiltro(filtro.estado)"
+        class="font-poppins text-sm px-4 py-2 rounded-lg border-2 transition-all duration-200 bg-background"
+        [style.border-color]="esFiltroActivo(filtro.estado) ? filtro.color : 'var(--color-surface-gray-200)'"
+        [style.color]="esFiltroActivo(filtro.estado) ? filtro.color : 'var(--color-surface-gray-400)'">
+        {{ filtro.label }}
+        @if (esFiltroActivo(filtro.estado)) { ✕ }
+      </button>
+    }
+
+    @if (filtrosActivos().size > 0) {
+      <button
+        (click)="limpiarFiltros()"
+        class="font-inter text-sm text-surface-gray-400 hover:text-surface-gray-600 transition-colors duration-200">
+        Limpiar filtros
+      </button>
+    }
+  </div>
+
+  <!-- Contador -->
+  <p class="font-inter text-surface-gray-400 text-sm">
+    {{ empresasFiltradas().length }} empresa{{ empresasFiltradas().length !== 1 ? 's' : '' }}
+    @if (filtrosActivos().size > 0) { encontradas }
+  </p>
+
+  @if (isLoading()) {
+    <p class="font-poppins text-surface-gray-400">Cargando empresas...</p>
+
+  } @else if (error()) {
+    <p class="font-poppins text-ui-red">{{ error() }}</p>
+
+  } @else if (empresasPaginadas().length === 0) {
+    <p class="font-poppins text-surface-gray-400">No hay empresas para los filtros seleccionados.</p>
+
+  } @else {
+
+    <div class="grid grid-cols-3 gap-8">
+      @for (empresa of empresasPaginadas(); track empresa.id) {
+        <app-item-card
+          [item]="empresa"
+          (cardClick)="empresaSeleccionada.set(empresa.id)" />
+      }
+    </div>
+
+    @if (totalPaginas() > 1) {
+      <div class="flex items-center justify-center gap-2 mt-4">
+        <button
+          (click)="irAPagina(paginaActual() - 1)"
+          [disabled]="paginaActual() === 0"
+          class="px-4 py-2 rounded-lg border-2 border-surface-gray-200 font-inter text-sm text-surface-gray-500 hover:border-surface-gray-300 disabled:opacity-30 transition-colors duration-200 bg-background">
+          ←
+        </button>
+
+        @for (pagina of [].constructor(totalPaginas()); track $index) {
+          <button
+            (click)="irAPagina($index)"
+            class="px-4 py-2 rounded-lg border-2 font-inter text-sm transition-colors duration-200 bg-background"
+            [class.border-ui-blue]="paginaActual() === $index"
+            [class.text-ui-blue]="paginaActual() === $index"
+            [class.border-surface-gray-200]="paginaActual() !== $index"
+            [class.text-surface-gray-500]="paginaActual() !== $index">
+            {{ $index + 1 }}
+          </button>
+        }
+
+        <button
+          (click)="irAPagina(paginaActual() + 1)"
+          [disabled]="paginaActual() === totalPaginas() - 1"
+          class="px-4 py-2 rounded-lg border-2 border-surface-gray-200 font-inter text-sm text-surface-gray-500 hover:border-surface-gray-300 disabled:opacity-30 transition-colors duration-200 bg-background">
+          →
+        </button>
+      </div>
+    }
+  }
+
+  @if (empresaSeleccionada()) {
+    <div class="overlay-backdrop" (click)="empresaSeleccionada.set(null)">
+      <div class="overlay-panel" (click)="$event.stopPropagation()">
+        <button
+          (click)="empresaSeleccionada.set(null)"
+          class="absolute top-4 right-4 font-inter text-surface-gray-400 hover:text-surface-gray-600 transition-colors duration-200">
+          ✕
+        </button>
+        <app-empresa-detail [empresaId]="empresaSeleccionada()" />
+      </div>
+    </div>
+  }
+
+</div>

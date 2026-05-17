@@ -1,7 +1,8 @@
 import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { ScrollService } from '../../core/services/scroll';
+import { ScrollService } from '../../core/services/scroll-service';
+import { SvgIcon } from '../svg-icon/svg-icon';
 
 interface MenuItem {
   label: string;
@@ -18,7 +19,7 @@ interface MenuData {
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, SvgIcon],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })

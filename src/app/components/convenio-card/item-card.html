@@ -1,0 +1,25 @@
+<div class="convenio-card-wrapper" (click)="onCardClick()">
+
+  <div class="card-body">
+    <h3 class="font-montserrat text-lg leading-snug mr-2" [style.color]="config.textColor">
+      {{ item.titulo }}
+    </h3>
+    <div class="separator mr-2" [style.background-color]="config.textColor"></div>
+    <div class="flex flex-col gap-2 mt-1 mr-3">
+      @for (campo of item.campos; track campo.label) {
+        <p class="font-poppins text-surface-gray-500">
+          <span class="text-surface-gray-600">{{ campo.label }}: </span>
+          <span class="break-all">{{ campo.valor }}</span>
+        </p>
+      }
+    </div>
+  </div>
+
+  <div class="estado-badge text-2xl" [style.background-color]="config.badgeColor">
+    <app-svg-icon
+      [src]="config.icon"
+      [color]="config.iconColor">
+    </app-svg-icon>
+  </div>
+
+</div>

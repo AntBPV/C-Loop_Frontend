@@ -1,0 +1,6 @@
+.main-content {
+  margin-left: 220px;
+  flex: 1;
+  min-height: 100vh;
+  padding: 32px;
+}

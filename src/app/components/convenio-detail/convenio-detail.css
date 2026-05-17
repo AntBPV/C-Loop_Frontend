@@ -1,0 +1,28 @@
+.detail-panel {
+  background: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.separator {
+  background: var(--color-surface-gray-200);
+}
+
+.tab-btn {
+  color: var(--color-surface-gray-400);
+  border: 2px solid transparent;
+}
+
+.tab-active {
+  color: var(--color-ui-blue);
+  border-color: var(--color-ui-blue);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-surface-gray-100);
+}
