@@ -1,0 +1,106 @@
+<div class="flex flex-col gap-6">
+
+  <!-- Header -->
+  <div class="flex flex-col gap-1">
+    <h2 class="font-montserrat text-xl text-surface-gray-600">Crear empresa</h2>
+    <p class="font-poppins text-surface-gray-400 text-sm">Complete los campos para registrar una nueva empresa.</p>
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- Error -->
+  @if (error()) {
+    <div class="px-4 py-3 rounded-lg bg-surface-red border-2 border-ui-red">
+      <p class="font-inter text-ui-red text-sm">{{ error() }}</p>
+    </div>
+  }
+
+  <div class="flex flex-col gap-4">
+
+    <div class="grid grid-cols-2 gap-4">
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Tipo de identificación</label>
+        <select [(ngModel)]="form.identificationType" class="input-field">
+          <option value="">Selecciona un tipo</option>
+          @for (tipo of tiposIdentificacion; track tipo.value) {
+            <option [value]="tipo.value">{{ tipo.label }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">NIT / Número de identificación</label>
+        <input
+          type="text"
+          [(ngModel)]="form.nit"
+          placeholder="900123456-7"
+          class="input-field" />
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="font-inter text-surface-gray-600 text-sm">Razón social</label>
+      <input
+        type="text"
+        [(ngModel)]="form.businessName"
+        placeholder="Empresa Prueba S.A.S."
+        class="input-field" />
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="font-inter text-surface-gray-600 text-sm">Nombre comercial</label>
+      <input
+        type="text"
+        [(ngModel)]="form.tradeName"
+        placeholder="Empresa Prueba"
+        class="input-field" />
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="font-inter text-surface-gray-600 text-sm">Representante legal</label>
+      <input
+        type="text"
+        [(ngModel)]="form.legalRepresentativeName"
+        placeholder="Nombre completo"
+        class="input-field" />
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Correo de contacto</label>
+        <input
+          type="email"
+          [(ngModel)]="form.contactEmail"
+          placeholder="contacto@empresa.com"
+          class="input-field" />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Teléfono</label>
+        <input
+          type="text"
+          [(ngModel)]="form.contactPhone"
+          placeholder="3001234567"
+          class="input-field" />
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="font-inter text-surface-gray-600 text-sm">Dirección</label>
+      <input
+        type="text"
+        [(ngModel)]="form.address"
+        placeholder="Calle 123 #45-67, Ciudad"
+        class="input-field" />
+    </div>
+
+    <button
+      (click)="onSubmit()"
+      [disabled]="!formValido() || isLoading()"
+      class="w-full py-2 rounded-lg bg-ui-blue font-inter text-white text-sm transition-colors duration-200 hover:bg-ui-blue-hover disabled:opacity-50 mt-2">
+      {{ isLoading() ? 'Creando...' : 'Crear empresa' }}
+    </button>
+
+  </div>
+
+</div>

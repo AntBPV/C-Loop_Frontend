@@ -86,7 +86,27 @@
 
       <!-- Tab: Historial -->
       @if (tabActiva() === 'historial') {
-        <p class="font-poppins text-surface-gray-400 text-sm">Próximamente.</p>
+        @if (isLoadingHistorial()) {
+          <p class="font-poppins text-surface-gray-400 text-sm">Cargando historial...</p>
+        } @else {
+          <div class="flex flex-col gap-3">
+            @for (entry of historial(); track entry.id) {
+              <div class="flex flex-col gap-1 p-3 rounded-xl border-2 border-surface-gray-200">
+                <div class="flex items-center gap-2">
+                  <span class="font-inter text-surface-gray-400 text-xs">{{ entry.previousStatus ?? '—' }}</span>
+                  <span class="font-inter text-surface-gray-400 text-xs">→</span>
+                  <span class="font-inter text-surface-gray-600 text-xs">{{ entry.newStatus }}</span>
+                </div>
+                @if (entry.comment) {
+                  <p class="font-poppins text-surface-gray-500 text-xs">{{ entry.comment }}</p>
+                }
+                <p class="font-inter text-surface-gray-400 text-xs">{{ entry.performedAt }}</p>
+              </div>
+            } @empty {
+              <p class="font-poppins text-surface-gray-400 text-sm">Sin historial disponible.</p>
+            }
+          </div>
+        }
       }
 
     }

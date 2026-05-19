@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ConveniosService, ConvenioResponse } from '../../../core/services/convenios-service';
 import { ItemCard, ItemCardData, ItemEstado } from '../../../components/convenio-card/item-card';
 import { ConvenioDetail } from '../../../components/convenio-detail/convenio-detail';
+import { ConvenioForm } from '../../../components/convenio-form/convenio-form';
+import { SvgIcon } from '../../../components/svg-icon/svg-icon';
 
 interface FiltroConfig {
   estado: ItemEstado;
@@ -13,7 +15,7 @@ interface FiltroConfig {
 
 @Component({
   selector: 'app-convenios',
-  imports: [CommonModule, ItemCard, ConvenioDetail],
+  imports: [CommonModule, ItemCard, ConvenioDetail, ConvenioForm, SvgIcon],
   templateUrl: './convenios.html',
   styleUrl: './convenios.css',
 })
@@ -123,4 +125,6 @@ export class Convenios implements OnInit {
     this.paginaActual.set(pagina);
     this.convenioSeleccionado.set(null);
   }
+
+  mostrarForm = signal(false);
 }

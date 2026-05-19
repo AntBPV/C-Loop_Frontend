@@ -86,28 +86,52 @@
 
       <!-- Tab: Historial -->
       @if (tabActiva() === 'historial') {
-        <div class="flex flex-col gap-3">
-          @for (entry of historial(); track entry.id) {
-            <div class="flex flex-col gap-1 p-3 rounded-xl border-2 border-surface-gray-200">
-              <div class="flex items-center gap-2">
-                <span class="font-inter text-surface-gray-400 text-xs">{{ entry.previousStatus ?? '—' }}</span>
-                <span class="font-inter text-surface-gray-400 text-xs">→</span>
-                <span class="font-inter text-surface-gray-600 text-xs">{{ entry.newStatus }}</span>
+        @if (isLoadingHistorial()) {
+          <p class="font-poppins text-surface-gray-400 text-sm">Cargando historial...</p>
+        } @else {
+          <div class="flex flex-col gap-3">
+            @for (entry of historial(); track entry.id) {
+              <div class="flex flex-col gap-1 p-3 rounded-xl border-2 border-surface-gray-200">
+                <div class="flex items-center gap-2">
+                  <span class="font-inter text-surface-gray-400 text-xs">{{ entry.previousStatus ?? '—' }}</span>
+                  <span class="font-inter text-surface-gray-400 text-xs">→</span>
+                  <span class="font-inter text-surface-gray-600 text-xs">{{ entry.newStatus }}</span>
+                </div>
+                @if (entry.comment) {
+                  <p class="font-poppins text-surface-gray-500 text-xs">{{ entry.comment }}</p>
+                }
+                <p class="font-inter text-surface-gray-400 text-xs">{{ entry.performedAt }}</p>
               </div>
-              @if (entry.comment) {
-                <p class="font-poppins text-surface-gray-500 text-xs">{{ entry.comment }}</p>
-              }
-              <p class="font-inter text-surface-gray-400 text-xs">{{ entry.performedAt }}</p>
-            </div>
-          } @empty {
-            <p class="font-poppins text-surface-gray-400 text-sm">Sin historial disponible.</p>
-          }
-        </div>
+            } @empty {
+              <p class="font-poppins text-surface-gray-400 text-sm">Sin historial disponible.</p>
+            }
+          </div>
+        }
       }
 
       <!-- Tab: Documentos -->
       @if (tabActiva() === 'documentos') {
-        <p class="font-poppins text-surface-gray-400 text-sm">Próximamente.</p>
+        @if (isLoadingDocumentos()) {
+          <p class="font-poppins text-surface-gray-400 text-sm">Cargando documentos...</p>
+        } @else if (documentos().length === 0) {
+          <p class="font-poppins text-surface-gray-400 text-sm">No hay documentos disponibles.</p>
+        } @else {
+          <div class="flex flex-col gap-3">
+            @for (doc of documentos(); track doc.id) {
+              <div class="flex items-center justify-between p-3 rounded-xl border-2 border-surface-gray-200">
+                <div class="flex flex-col gap-1">
+                  <p class="font-poppins text-surface-gray-600 text-sm">{{ doc.fileName }}</p>
+                  <p class="font-inter text-surface-gray-400 text-xs">{{ doc.stage }}</p>
+                </div>
+                <button
+                  (click)="descargarDocumento(doc.id, doc.fileName)"
+                  class="px-3 py-2 rounded-lg border-2 border-ui-blue font-inter text-ui-blue text-xs hover:bg-ui-blue hover:text-white transition-colors duration-200">
+                  Descargar
+                </button>
+              </div>
+            }
+          </div>
+        }
       }
 
     }

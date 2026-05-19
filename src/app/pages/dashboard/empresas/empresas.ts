@@ -7,6 +7,8 @@ import {
 } from '../../../core/services/empresas-service';
 import { EmpresaDetail } from '../../../components/empresa-detail/empresa-detail';
 import { ItemEstado, ItemCard, ItemCardData } from '../../../components/convenio-card/item-card';
+import { SvgIcon } from '../../../components/svg-icon/svg-icon';
+import { EmpresaForm } from '../../../components/empresa-form/empresa-form';
 
 interface FiltroConfig {
   estado: ItemEstado;
@@ -16,7 +18,7 @@ interface FiltroConfig {
 
 @Component({
   selector: 'app-empresas',
-  imports: [CommonModule, ItemCard, EmpresaDetail],
+  imports: [CommonModule, ItemCard, EmpresaDetail, SvgIcon, EmpresaForm],
   templateUrl: './empresas.html',
   styleUrl: './empresas.css',
 })
@@ -106,4 +108,6 @@ export class Empresas implements OnInit {
     this.paginaActual.set(pagina);
     this.empresaSeleccionada.set(null);
   }
+
+  mostrarForm = signal(false);
 }

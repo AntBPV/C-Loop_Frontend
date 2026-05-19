@@ -36,6 +36,16 @@ export interface ConvenioHistory {
   performedAt: string;
 }
 
+export interface ConvenioDocumento {
+  id: string;
+  convenioId: string;
+  documentType: string;
+  stage: string;
+  fileName: string;
+  generatedAt: string;
+  notes: string | null;
+}
+
 type TabActiva = 'info' | 'historial' | 'documentos';
 
 @Component({
@@ -52,6 +62,9 @@ export class ConvenioDetail implements OnChanges {
   error = signal<string | null>(null);
   convenio = signal<ConvenioDetail | null>(null);
   historial = signal<ConvenioHistory[]>([]);
+  isLoadingHistorial = signal(false);
+  documentos = signal<ConvenioDocumento[]>([]);
+  isLoadingDocumentos = signal(false);
 
   constructor(private http: HttpClient) {}
 
@@ -88,13 +101,57 @@ export class ConvenioDetail implements OnChanges {
   }
 
   cargarHistorial() {
+    this.isLoadingHistorial.set(true);
     this.http
       .get<
         ConvenioHistory[]
       >(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.convenios.history(this.convenioId!)}`, { headers: this.getHeaders() })
       .subscribe({
-        next: (data) => this.historial.set(data),
-        error: () => this.error.set('No se pudo cargar el historial.'),
+        next: (data) => {
+          this.historial.set(data);
+          this.isLoadingHistorial.set(false);
+        },
+        error: () => {
+          this.error.set('No se pudo cargar el historial.');
+          this.isLoadingHistorial.set(false);
+        },
+      });
+  }
+
+  cargarDocumentos() {
+    this.isLoadingDocumentos.set(true);
+    this.http
+      .get<
+        ConvenioDocumento[]
+      >(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.convenios.documents(this.convenioId!)}`, { headers: this.getHeaders() })
+      .subscribe({
+        next: (data) => {
+          this.documentos.set(data);
+          this.isLoadingDocumentos.set(false);
+        },
+        error: () => {
+          this.error.set('No se pudieron cargar los documentos.');
+          this.isLoadingDocumentos.set(false);
+        },
+      });
+  }
+
+  descargarDocumento(documentoId: string, fileName: string) {
+    this.http
+      .get(
+        `${API_CONFIG.baseUrl}${API_CONFIG.endpoints.convenios.downloadDocument(this.convenioId!, documentoId)}`,
+        { headers: this.getHeaders(), responseType: 'blob' },
+      )
+      .subscribe({
+        next: (blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = fileName;
+          a.click();
+          window.URL.revokeObjectURL(url);
+        },
+        error: () => this.error.set('No se pudo descargar el documento.'),
       });
   }
 
@@ -102,6 +159,9 @@ export class ConvenioDetail implements OnChanges {
     this.tabActiva.set(tab);
     if (tab === 'historial' && this.historial().length === 0) {
       this.cargarHistorial();
+    }
+    if (tab === 'documentos' && this.documentos().length === 0) {
+      this.cargarDocumentos();
     }
   }
 }
