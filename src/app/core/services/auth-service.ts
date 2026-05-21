@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_CONFIG } from '../config/api.config';
 import { tap } from 'rxjs/operators';
@@ -18,6 +18,17 @@ export interface RegisterPayload {
 export interface LoginPayload {
   email: string;
   password: string;
+}
+
+export interface CurrentUser {
+  id: string;
+  fullName: string;
+  email: string;
+  emailVerified: boolean;
+  active: boolean;
+  authProvider: string;
+  roles: string[];
+  createdAt: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -60,5 +71,17 @@ export class AuthService {
           }
         }),
       );
+  }
+
+  getCurrentUser(): Observable<CurrentUser> {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.get<CurrentUser>(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.users.me}`, {
+      headers,
+    });
   }
 }

@@ -35,6 +35,42 @@
       <!-- Tab: Información -->
       @if (tabActiva() === 'info') {
         <div class="flex flex-col gap-3">
+          <!-- Acciones -->
+          @if (empresa()!.status === 'BORRADOR') {
+            <div class="flex flex-col gap-3">
+
+              @if (actionSuccess()) {
+                <div class="rounded-xl bg-ui-green/10 border border-ui-green px-4 py-3">
+                  <p class="font-poppins text-ui-green text-sm">
+                    {{ actionSuccess() }}
+                  </p>
+                </div>
+              }
+
+              @if (actionError()) {
+                <div class="rounded-xl bg-ui-red/10 border border-ui-red px-4 py-3">
+                  <p class="font-poppins text-ui-red text-sm">
+                    {{ actionError() }}
+                  </p>
+                </div>
+              }
+
+              <button
+                (click)="submitForValidation()"
+                [disabled]="isSubmitting()"
+                class="w-full rounded-xl bg-ui-blue hover:bg-ui-blue-hover hover:cursor-pointer active:bg-ui-blue-active disabled:opacity-50 transition-colors duration-200 px-4 py-3">
+
+                <span class="font-inter text-background text-sm">
+                  @if (isSubmitting()) {
+                    Enviando...
+                  } @else {
+                    Enviar a validación
+                  }
+                </span>
+
+              </button>
+            </div>
+          }
           <div class="info-row">
             <span class="font-inter text-surface-gray-400 text-sm">Estado</span>
             <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.status }}</span>
@@ -82,6 +118,46 @@
             </div>
           }
         </div>
+        @if (empresa()!.status === 'PENDIENTE_VALIDACION') {
+
+          <div class="flex flex-col gap-3">
+
+            <div class="grid grid-cols-3 gap-3">
+
+              <button
+                (click)="approveCompany()"
+                [disabled]="isSubmitting()"
+                class="rounded-xl bg-ui-green hover:bg-ui-green-hover disabled:opacity-50 px-4 py-3 transition-opacity duration-200">
+
+                <span class="font-inter text-white text-sm">
+                  Aprobar
+                </span>
+              </button>
+
+              <button
+                (click)="observeCompany()"
+                [disabled]="isSubmitting()"
+                class="rounded-xl bg-ui-yellow hover:bg-ui-yellow-hover disabled:opacity-50 px-4 py-3 transition-opacity duration-200">
+
+                <span class="font-inter text-background text-sm">
+                  Solicitar corrección
+                </span>
+              </button>
+
+              <button
+                (click)="rejectCompany()"
+                [disabled]="isSubmitting()"
+                class="rounded-xl bg-ui-red hover:bg-ui-red-hover disabled:opacity-50 px-4 py-3 transition-opacity duration-200">
+
+                <span class="font-inter text-background text-sm">
+                  Rechazar
+                </span>
+              </button>
+
+            </div>
+
+          </div>
+        }
       }
 
       <!-- Tab: Historial -->

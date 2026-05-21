@@ -29,6 +29,18 @@ export interface EmpresaResponse {
   updatedAt: string;
 }
 
+export interface PendingValidationCompany {
+  id: string;
+  nit: string;
+  businessName: string;
+  status: EmpresaStatus;
+  createdById: string;
+  validatedById: string | null;
+  validatedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class EmpresasService {
   private base = API_CONFIG.baseUrl;
@@ -50,6 +62,59 @@ export class EmpresasService {
     return this.http.get<EmpresaResponse>(
       `${this.base}${API_CONFIG.endpoints.companies.getById(id)}`,
       { headers: this.getHeaders() },
+    );
+  }
+
+  submitValidation(id: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}${API_CONFIG.endpoints.companies.submitValidation(id)}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      },
+    );
+  }
+
+  validateCompany(id: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}${API_CONFIG.endpoints.companies.validate(id)}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      },
+    );
+  }
+
+  observeCompany(id: string, comment: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}${API_CONFIG.endpoints.companies.observe(id)}`,
+      {
+        comment,
+      },
+      {
+        headers: this.getHeaders(),
+      },
+    );
+  }
+
+  rejectCompany(id: string, comment: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}${API_CONFIG.endpoints.companies.reject(id)}`,
+      {
+        comment,
+      },
+      {
+        headers: this.getHeaders(),
+      },
+    );
+  }
+
+  getPendingValidation(): Observable<PendingValidationCompany[]> {
+    return this.http.get<EmpresaResponse[]>(
+      `${this.base}${API_CONFIG.endpoints.companies.pendingValidation}`,
+      {
+        headers: this.getHeaders(),
+      },
     );
   }
 

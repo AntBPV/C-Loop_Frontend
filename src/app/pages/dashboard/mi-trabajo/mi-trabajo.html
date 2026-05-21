@@ -1,0 +1,94 @@
+<div class="flex flex-col gap-8">
+
+  @if (isLoading()) {
+    <p class="font-poppins text-surface-gray-400">Cargando...</p>
+
+  } @else if (error()) {
+    <p class="font-poppins text-ui-red">{{ error() }}</p>
+
+  } @else if (data()) {
+    <!-- Aprobaciones pendientes -->
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-3">
+        <h2 class="font-montserrat text-xl text-surface-gray-600">Aprobaciones pendientes</h2>
+        <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-yellow text-ui-yellow">
+          {{ data()!.pendingApprovals.length }}
+        </span>
+      </div>
+      <div class="separator-gradient h-px w-full"></div>
+
+      @if (data()!.pendingApprovals.length === 0) {
+        <p class="font-poppins text-surface-gray-400 text-sm">No tienes aprobaciones pendientes.</p>
+      } @else {
+        <div class="flex flex-col gap-3">
+          @for (approval of data()!.pendingApprovals; track approval.stepId) {
+            <div class="flex items-center justify-between p-4 rounded-2xl border-2 border-surface-gray-200 bg-background hover:border-ui-blue transition-colors duration-200">
+              <div class="flex flex-col gap-1">
+                <p class="font-montserrat text-surface-gray-600">{{ approval.convenioTitle || approval.convenioCode }}</p>
+                <p class="font-poppins text-surface-gray-400 text-sm">{{ approval.companyName }}</p>
+                <div class="flex items-center gap-2 mt-1">
+                  <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-blue text-ui-blue">
+                    {{ approval.stage }}
+                  </span>
+                  @if (approval.dueAt) {
+                    <span class="font-inter text-surface-gray-400 text-xs">
+                      Vence: {{ approval.dueAt | date:'dd/MM/yyyy' }}
+                    </span>
+                  }
+                </div>
+              </div>
+              <div class="flex flex-col items-end gap-1">
+                <span class="font-inter text-surface-gray-400 text-xs">
+                  {{ approval.assignedAt | date:'dd/MM/yyyy' }}
+                </span>
+                <!-- TODO: conectar con endpoint de aprobación -->
+                <button class="px-3 py-2 rounded-lg border-2 border-ui-blue font-inter text-ui-blue text-xs hover:bg-ui-blue hover:text-white transition-colors duration-200">
+                  Revisar
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Formalizaciones pendientes -->
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-3">
+        <h2 class="font-montserrat text-xl text-surface-gray-600">Formalizaciones pendientes</h2>
+        <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-red text-ui-red">
+          {{ data()!.pendingFormalizations.length }}
+        </span>
+      </div>
+      <div class="separator-gradient h-px w-full"></div>
+
+      @if (data()!.pendingFormalizations.length === 0) {
+        <p class="font-poppins text-surface-gray-400 text-sm">No tienes formalizaciones pendientes.</p>
+      } @else {
+        <div class="flex flex-col gap-3">
+          @for (form of data()!.pendingFormalizations; track form.convenioId) {
+            <div class="flex items-center justify-between p-4 rounded-2xl border-2 border-surface-gray-200 bg-background hover:border-ui-red transition-colors duration-200">
+              <div class="flex flex-col gap-1">
+                <p class="font-montserrat text-surface-gray-600">{{ form.convenioCode }}</p>
+                <p class="font-poppins text-surface-gray-400 text-sm">{{ form.companyName }}</p>
+                <div class="flex items-center gap-2 mt-1">
+                  <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-red text-ui-red">
+                    {{ form.status }}
+                  </span>
+                  <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-gray-100 text-surface-gray-500">
+                    {{ form.convenioType }}
+                  </span>
+                </div>
+              </div>
+              <span class="font-inter text-surface-gray-400 text-xs">
+                {{ form.updatedAt | date:'dd/MM/yyyy' }}
+              </span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+  }
+
+</div>

@@ -1,5 +1,4 @@
 export const API_CONFIG = {
-  // TODO: Cambiar por la URL real
   baseUrl: 'https://backend-proyecto-de-grado.onrender.com',
   endpoints: {
     auth: {
