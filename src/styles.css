@@ -1,4 +1,7 @@
 @import 'tailwindcss';
+@import './styles/components/detail-panel.css';
+@import './styles/components/forms.css';
+@import './styles/components/modal.css';
 
 @theme {
     --color-background: #EEF2F5;
@@ -77,4 +80,9 @@ html {
 
 .separator-gradient {
   background: linear-gradient(to right, var(--color-ui-green), var(--color-ui-blue));
+}
+
+input, textarea, select {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.05em;
 }

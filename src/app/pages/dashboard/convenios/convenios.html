@@ -79,14 +79,42 @@
   }
 
   @if (convenioSeleccionado()) {
-    <div class="overlay-backdrop" (click)="convenioSeleccionado.set(null)">
+    <div class="modal-overlay" (click)="convenioSeleccionado.set(null)">
+      <div
+        class="modal-container"
+        (click)="$event.stopPropagation()">
+        <div class="flex items-center justify-end">
+          <button
+            (click)="convenioSeleccionado.set(null)"
+            class="text-surface-gray-400 hover:text-ui-red hover:cursor-pointer transition-colors duration-200">
+            ✕
+          </button>
+        </div>
+        <app-convenio-detail [convenioId]="convenioSeleccionado()" />
+      </div>
+    </div>
+  }
+
+  <!-- Botón crear -->
+  <button
+    (click)="mostrarForm.set(true)"
+    class="fixed bottom-8 right-8 flex items-center gap-3 px-6 py-3 rounded-xl bg-ui-blue font-poppins text-background text-2xl hover:bg-ui-blue-hover hover:cursor-pointer transition-colors duration-200 shadow-lg z-50">
+    Crear convenio
+    <app-svg-icon src="icons/continue.svg" />
+  </button>
+
+  <!-- Overlay formulario -->
+  @if (mostrarForm()) {
+    <div class="overlay-backdrop" (click)="mostrarForm.set(false)">
       <div class="overlay-panel" (click)="$event.stopPropagation()">
         <button
-          (click)="convenioSeleccionado.set(null)"
+          (click)="mostrarForm.set(false)"
           class="absolute top-4 right-4 font-inter text-surface-gray-400 hover:text-surface-gray-600 transition-colors duration-200">
           ✕
         </button>
-        <app-convenio-detail [convenioId]="convenioSeleccionado()" />
+        <app-convenio-form
+          (cerrar)="mostrarForm.set(false)"
+          (creado)="mostrarForm.set(false); ngOnInit()" />
       </div>
     </div>
   }

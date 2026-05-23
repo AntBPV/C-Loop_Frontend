@@ -1,5 +1,4 @@
 export const API_CONFIG = {
-  // TODO: Cambiar por la URL real
   baseUrl: 'https://backend-proyecto-de-grado.onrender.com',
   endpoints: {
     auth: {
@@ -32,6 +31,7 @@ export const API_CONFIG = {
       create: '/api/convenios',
       list: '/api/convenios',
       getById: (id: string) => `/api/convenios/${id}`,
+      update: (id: string) => `/api/convenios/${id}`,
       versions: (id: string) => `/api/convenios/${id}/versions`,
       history: (id: string) => `/api/convenios/${id}/history`,
       submit: (id: string) => `/api/convenios/${id}/submit`,

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_CONFIG } from '../config/api.config';
-import { ItemEstado } from '../../components/convenio-card/item-card';
+import { ItemEstado } from '../../components/item-card/item-card';
 
 export type EmpresaStatus =
   | 'BORRADOR'
@@ -21,6 +21,18 @@ export interface EmpresaResponse {
   contactEmail: string;
   contactPhone: string;
   address: string;
+  status: EmpresaStatus;
+  createdById: string;
+  validatedById: string | null;
+  validatedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PendingValidationCompany {
+  id: string;
+  nit: string;
+  businessName: string;
   status: EmpresaStatus;
   createdById: string;
   validatedById: string | null;
@@ -53,13 +65,66 @@ export class EmpresasService {
     );
   }
 
+  submitValidation(id: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}${API_CONFIG.endpoints.companies.submitValidation(id)}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      },
+    );
+  }
+
+  validateCompany(id: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}${API_CONFIG.endpoints.companies.validate(id)}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      },
+    );
+  }
+
+  observeCompany(id: string, comment: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}${API_CONFIG.endpoints.companies.observe(id)}`,
+      {
+        comment,
+      },
+      {
+        headers: this.getHeaders(),
+      },
+    );
+  }
+
+  rejectCompany(id: string, comment: string): Observable<void> {
+    return this.http.post<void>(
+      `${this.base}${API_CONFIG.endpoints.companies.reject(id)}`,
+      {
+        comment,
+      },
+      {
+        headers: this.getHeaders(),
+      },
+    );
+  }
+
+  getPendingValidation(): Observable<PendingValidationCompany[]> {
+    return this.http.get<EmpresaResponse[]>(
+      `${this.base}${API_CONFIG.endpoints.companies.pendingValidation}`,
+      {
+        headers: this.getHeaders(),
+      },
+    );
+  }
+
   calcularEstado(status: EmpresaStatus): ItemEstado {
     const map: Record<EmpresaStatus, ItemEstado> = {
-      BORRADOR: 'vencido',
+      BORRADOR: 'borrador',
       PENDIENTE_VALIDACION: 'atencion',
       VALIDADA: 'ok',
       OBSERVADA: 'notificacion',
-      RECHAZADA: 'por-vencer',
+      RECHAZADA: 'cancelado',
     };
     return map[status];
   }

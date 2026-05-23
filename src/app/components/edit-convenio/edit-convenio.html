@@ -1,0 +1,178 @@
+<div class="modal-overlay">
+
+  <div class="modal-container">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+
+      <div class="flex flex-col">
+        <h2 class="font-poppins text-xl text-surface-gray-600">
+          Editar convenio
+        </h2>
+
+        <p class="font-poppins text-surface-gray-400 text-sm">
+          {{ convenio.code }}
+        </p>
+      </div>
+
+      <button
+        (click)="cerrar.emit()"
+        class="text-surface-gray-400 hover:text-ui-red hover:cursor-pointer transition-colors duration-200">
+        ✕
+      </button>
+    </div>
+
+    <!-- Formulario -->
+    <div class="grid grid-cols-2 gap-4">
+
+      <!-- Título -->
+      <div class="col-span-2 flex flex-col gap-1">
+        <label class="font-inter text-sm text-surface-gray-500">
+          Título
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="editModel().title"
+          class="input-field">
+      </div>
+
+      <!-- Tipo -->
+      <div class="flex flex-col gap-1">
+
+        <label class="font-inter text-sm text-surface-gray-500">
+          Tipo
+        </label>
+
+        <select
+          [(ngModel)]="editModel().convenioType"
+          class="input-field">
+
+          @for (tipo of tiposConvenio; track tipo.value) {
+
+            <option [value]="tipo.value">
+              {{ tipo.label }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+      <!-- Empresa -->
+      <div class="flex flex-col gap-1">
+
+        <label class="font-inter text-sm text-surface-gray-500">
+          Empresa
+        </label>
+
+        <select
+          [(ngModel)]="editModel().companyId"
+          class="input-field">
+
+          @for (empresa of empresas(); track empresa.id) {
+
+            <option [value]="empresa.id">
+              {{ empresa.businessName }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+      <!-- Duración -->
+      <div class="flex flex-col gap-1">
+
+        <label class="font-inter text-sm text-surface-gray-500">
+          Duración (meses)
+        </label>
+
+        <input
+          type="number"
+          min="1"
+          [(ngModel)]="editModel().durationMonths"
+          class="input-field">
+
+      </div>
+
+      <!-- Descripción -->
+      <div class="col-span-2 flex flex-col gap-1">
+
+        <label class="font-inter text-sm text-surface-gray-500">
+          Descripción
+        </label>
+
+        <textarea
+          [(ngModel)]="editModel().description"
+          class="input-field min-h-28 resize-none">
+        </textarea>
+
+      </div>
+
+      <!-- Objetivo -->
+      <div class="col-span-2 flex flex-col gap-1">
+
+        <label class="font-inter text-sm text-surface-gray-500">
+          Objetivo
+        </label>
+
+        <textarea
+          [(ngModel)]="editModel().objective"
+          class="input-field min-h-28 resize-none">
+        </textarea>
+
+      </div>
+
+      <div class="col-span-2 flex flex-col gap-1">
+        <label class="font-inter text-sm text-surface-gray-500">
+          Obligaciones de la entidad
+        </label>
+
+        <textarea
+          [(ngModel)]="editModel().externalEntityObligations"
+          class="input-field min-h-28 resize-none">
+        </textarea>
+            </div>
+
+            <div class="col-span-2 flex flex-col gap-1">
+              <label class="font-inter text-sm text-surface-gray-500">
+                Obligaciones de la universidad
+              </label>
+
+              <textarea
+                [(ngModel)]="editModel().universityObligations"
+                class="input-field min-h-28 resize-none">
+        </textarea>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="flex justify-end gap-3">
+
+      <button
+        (click)="cerrar.emit()"
+        class="px-4 py-2 rounded-xl border-2 border-surface-gray-200 text-surface-gray-500 hover:bg-surface-gray-100 hover:cursor-pointer">
+
+        Cancelar
+
+      </button>
+
+      <button
+        (click)="saveChanges()"
+        [disabled]="isLoading()"
+        class="px-4 py-2 rounded-xl bg-ui-blue text-white disabled:opacity-50 hover:bg-ui-blue-hover hover:cursor-pointer">
+        @if (isLoading()) {
+          Guardando...
+        } @else {
+          Guardar cambios
+        }
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

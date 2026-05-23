@@ -1,0 +1,5 @@
+.separator {
+  height: 2px;
+  background: var(--color-surface-gray-200);
+  border-radius: 999px;
+}

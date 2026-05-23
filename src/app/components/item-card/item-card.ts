@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SvgIcon } from '../svg-icon/svg-icon';
 
-export type ItemEstado = 'ok' | 'atencion' | 'por-vencer' | 'vencido' | 'notificacion';
+export type ItemEstado = 'ok' | 'atencion' | 'por-vencer' | 'vencido' | 'notificacion' | 'borrador' | 'en-proceso' | 'cancelado';
 
 export interface ItemCardData {
   id: string;
   titulo: string;
+  subtitulo?: string;
   campos: { label: string; valor: string }[];
   estado: ItemEstado;
 }
@@ -51,6 +52,24 @@ export class ItemCard {
       icon: 'icons/notificacion.svg',
     },
     vencido: {
+      badgeColor: 'var(--color-surface-gray-400)',
+      textColor: 'var(--color-surface-gray-400)',
+      iconColor: 'var(--color-surface-gray-200)',
+      icon: 'icons/por-vencer.svg',
+    },
+    borrador: {
+      badgeColor: 'var(--color-ui-blue-active)',
+      textColor: 'var(--color-ui-blue-active)',
+      iconColor: 'var(--color-surface-blue)',
+      icon: 'icons/borrador.svg',
+    },
+    'en-proceso': {
+      badgeColor: 'var(--color-ui-yellow)',
+      textColor: 'var(--color-ui-yellow)',
+      iconColor: 'var(--color-surface-yellow)',
+      icon: 'icons/en-proceso.svg',
+    },
+    cancelado: {
       badgeColor: 'var(--color-surface-gray-400)',
       textColor: 'var(--color-surface-gray-400)',
       iconColor: 'var(--color-surface-gray-200)',

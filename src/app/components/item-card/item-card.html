@@ -1,9 +1,12 @@
 <div class="convenio-card-wrapper" (click)="onCardClick()">
 
   <div class="card-body">
-    <h3 class="font-montserrat text-lg leading-snug mr-2" [style.color]="config.textColor">
+    <span class="font-montserrat text-lg leading-snug mr-2" [style.color]="config.textColor">
       {{ item.titulo }}
-    </h3>
+    </span>
+    <span class="font-montserrat leading-snug mr-2 text-surface-gray-500">
+      {{ item.subtitulo }}
+    </span>
     <div class="separator mr-2" [style.background-color]="config.textColor"></div>
     <div class="flex flex-col gap-2 mt-1 mr-3">
       @for (campo of item.campos; track campo.label) {

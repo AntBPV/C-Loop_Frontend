@@ -10,6 +10,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 20;
 }
 
 .sidebar-logo {
@@ -46,4 +47,31 @@
 .nav-item-active {
   background: var(--color-surface-gray-100);
   color: var(--color-surface-gray-600);
+}
+
+.user-menu-wrapper {
+  position: relative;
+}
+
+.user-dropdown {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: -16px;
+  width: 280px;
+  background: var(--color-background);
+  border: 2px solid var(--color-surface-gray-200);
+  border-radius: 16px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 50;
+  box-shadow: 0 -4px 16px color-mix(in srgb, var(--color-surface-gray-300) 30%, transparent);
+}
+
+.user-dropdown .nav-item {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  border-radius: 10px;
 }

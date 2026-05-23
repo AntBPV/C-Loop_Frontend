@@ -1,0 +1,128 @@
+<div class="flex flex-col gap-6">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+
+    <div class="flex items-center gap-3">
+
+      <h2 class="font-montserrat text-xl text-surface-gray-600">
+        Validación empresas
+      </h2>
+
+      <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-yellow text-ui-yellow">
+        {{ empresas().length }}
+      </span>
+
+    </div>
+
+  </div>
+
+  <div class="separator-gradient h-px w-full"></div>
+
+  <!-- Estados -->
+  @if (isLoading()) {
+
+    <p class="font-poppins text-surface-gray-400 text-sm">
+      Cargando empresas...
+    </p>
+
+  } @else if (error()) {
+
+    <p class="font-poppins text-ui-red text-sm">
+      {{ error() }}
+    </p>
+
+  } @else if (empresas().length === 0) {
+
+    <p class="font-poppins text-surface-gray-400 text-sm">
+      No hay empresas pendientes.
+    </p>
+
+  } @else {
+
+    <!-- Lista -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+      @for (empresa of empresas(); track empresa.id) {
+
+        <button
+          (click)="seleccionarEmpresa(empresa.id)"
+          class="text-left p-4 rounded-2xl border-2 border-surface-gray-200 bg-background hover:border-ui-blue transition-colors duration-200">
+
+          <div class="flex flex-col gap-2">
+
+            <div class="flex flex-col gap-1">
+
+              <p class="font-montserrat text-surface-gray-600">
+                {{ empresa.businessName }}
+              </p>
+
+              <p class="font-poppins text-surface-gray-400 text-sm">
+                {{ empresa.nit }}
+              </p>
+
+            </div>
+
+            <div class="flex items-center justify-between mt-2">
+
+              <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-yellow text-ui-yellow">
+                {{ empresa.status }}
+              </span>
+
+              <span class="font-inter text-surface-gray-400 text-xs">
+                {{ empresa.createdAt | date:'dd/MM/yyyy' }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </button>
+
+      }
+
+    </div>
+
+  }
+
+</div>
+
+<!-- Overlay -->
+@if (empresaSeleccionadaId()) {
+
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-6"
+    (click)="cerrarDetalle()">
+
+    <!-- Modal -->
+    <div
+      class="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl bg-background border-2 border-surface-gray-200 p-6 shadow-2xl"
+      (click)="$event.stopPropagation()">
+
+      <!-- Header modal -->
+      <div class="flex items-center justify-between mb-6">
+
+        <h3 class="font-montserrat text-lg text-surface-gray-600">
+          Detalle empresa
+        </h3>
+
+        <button
+          (click)="cerrarDetalle()"
+          class="w-10 h-10 rounded-xl border-2 border-surface-gray-200 hover:border-ui-red hover:text-ui-red transition-colors duration-200">
+
+          ✕
+
+        </button>
+
+      </div>
+
+      <app-empresa-detail
+        [empresaId]="empresaSeleccionadaId()"
+        (empresaActualizada)="onEmpresaActualizada()">>
+      </app-empresa-detail>
+
+    </div>
+
+  </div>
+
+}

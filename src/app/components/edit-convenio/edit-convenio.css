@@ -1,0 +1,14 @@
+.input-edit {
+  width: 100%;
+  border: 2px solid var(--color-surface-gray-200);
+  border-radius: 14px;
+  padding: 0.75rem 1rem;
+  background: var(--color-background);
+  color: var(--color-surface-gray-600);
+  transition: border-color 0.2s ease;
+}
+
+.input-edit:focus {
+  outline: none;
+  border-color: var(--color-ui-blue);
+}

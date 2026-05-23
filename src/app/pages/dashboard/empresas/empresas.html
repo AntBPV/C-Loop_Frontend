@@ -79,14 +79,36 @@
   }
 
   @if (empresaSeleccionada()) {
-    <div class="overlay-backdrop" (click)="empresaSeleccionada.set(null)">
-      <div class="overlay-panel" (click)="$event.stopPropagation()">
+    <div class="modal-overlay" (click)="empresaSeleccionada.set(null)">
+      <div class="modal-container" (click)="$event.stopPropagation()">
         <button
           (click)="empresaSeleccionada.set(null)"
           class="absolute top-4 right-4 font-inter text-surface-gray-400 hover:text-surface-gray-600 transition-colors duration-200">
           ✕
         </button>
         <app-empresa-detail [empresaId]="empresaSeleccionada()" />
+      </div>
+    </div>
+  }
+
+  <button
+    (click)="mostrarForm.set(true)"
+    class="fixed bottom-8 right-8 flex items-center gap-3 px-6 py-3 rounded-xl bg-ui-blue font-poppins text-background text-2xl hover:bg-ui-blue-hover hover:cursor-pointer transition-colors duration-200 shadow-lg z-50">
+    Crear empresa
+    <app-svg-icon src="icons/continue.svg" />
+  </button>
+
+  @if (mostrarForm()) {
+    <div class="overlay-backdrop" (click)="mostrarForm.set(false)">
+      <div class="overlay-panel" (click)="$event.stopPropagation()">
+        <button
+          (click)="mostrarForm.set(false)"
+          class="absolute top-4 right-4 font-inter text-surface-gray-400 hover:text-surface-gray-600 transition-colors duration-200">
+          ✕
+        </button>
+        <app-empresa-form
+          (cerrar)="mostrarForm.set(false)"
+          (creada)="mostrarForm.set(false); ngOnInit()" />
       </div>
     </div>
   }
