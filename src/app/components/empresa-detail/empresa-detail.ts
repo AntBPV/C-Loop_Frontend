@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, signal } from '@angular/core';
+import { Component, Input, Output, OnChanges, OnInit, signal, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmpresasService, EmpresaResponse } from '../../core/services/empresas-service';
 import { API_CONFIG } from '../../core/config/api.config';
@@ -26,6 +26,7 @@ export interface EmpresaHistory {
 })
 export class EmpresaDetail implements OnChanges, OnInit {
   @Input() empresaId: string | null = null;
+  @Output() empresaActualizada = new EventEmitter<void>();
 
   tabActiva = signal<TabActiva>('info');
   isLoading = signal(true);
@@ -129,6 +130,7 @@ export class EmpresaDetail implements OnChanges, OnInit {
     this.empresasService.validateCompany(this.empresaId).subscribe({
       next: () => {
         this.actionSuccess.set('Empresa validada correctamente.');
+        this.empresaActualizada.emit();
 
         this.cargarEmpresa();
         this.cargarHistorial();
@@ -161,6 +163,7 @@ export class EmpresaDetail implements OnChanges, OnInit {
     this.empresasService.observeCompany(this.empresaId, comment).subscribe({
       next: () => {
         this.actionSuccess.set('Empresa observada correctamente.');
+        this.empresaActualizada.emit();
 
         this.cargarEmpresa();
         this.cargarHistorial();
@@ -193,6 +196,7 @@ export class EmpresaDetail implements OnChanges, OnInit {
     this.empresasService.rejectCompany(this.empresaId, comment).subscribe({
       next: () => {
         this.actionSuccess.set('Empresa rechazada correctamente.');
+        this.empresaActualizada.emit();
 
         this.cargarEmpresa();
         this.cargarHistorial();

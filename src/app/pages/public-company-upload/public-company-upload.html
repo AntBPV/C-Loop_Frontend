@@ -1,0 +1,119 @@
+<div class="min-h-screen bg-background flex items-center justify-center p-6">
+
+  <div class="w-full max-w-3xl rounded-3xl border-2 border-surface-gray-200 bg-background p-8 flex flex-col gap-6">
+
+    <!-- Loading -->
+    @if (isLoading()) {
+
+      <p class="font-poppins text-surface-gray-400 text-sm">
+        Cargando solicitud...
+      </p>
+
+    }
+    @else if (error()) {
+
+    <!-- Error -->
+
+      <p class="font-poppins text-ui-red text-sm">
+        {{ error() }}
+      </p>
+
+    }
+    @else if (uploadData(); as data) {
+
+    <!-- Data -->
+
+      <!-- Header -->
+      <div class="flex flex-col gap-2">
+
+        <h1 class="font-montserrat text-2xl text-surface-gray-600">
+          Carga de documentos
+        </h1>
+
+        <p class="font-poppins text-surface-gray-500">
+          Convenio {{ data.convenioCode }}
+        </p>
+
+        <p class="font-poppins text-surface-gray-400 text-sm">
+          {{ data.companyName }}
+        </p>
+
+      </div>
+
+      <div class="separator"></div>
+
+      <!-- Expirado -->
+      @if (tokenExpirado()) {
+
+        <div class="rounded-2xl border-2 border-ui-red bg-red-50 p-4">
+
+          <p class="font-poppins text-ui-red text-sm">
+            Este enlace expiró.
+          </p>
+
+        </div>
+
+      }
+
+      @else {
+      <!-- Vigente -->
+
+        <div class="flex flex-col gap-4">
+
+          <div class="rounded-2xl border-2 border-surface-gray-200 p-4">
+
+            <div class="flex flex-col gap-2">
+
+              <p class="font-inter text-sm text-surface-gray-500">
+                Estado solicitud
+              </p>
+
+              <p class="font-poppins text-surface-gray-600">
+                {{ data.status }}
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="flex flex-col gap-3">
+
+            <h2 class="font-montserrat text-lg text-surface-gray-600">
+              Documentos requeridos
+            </h2>
+
+            @for (doc of data.requiredDocuments; track doc.documentType) {
+
+              <div class="rounded-2xl border-2 border-surface-gray-200 p-4 flex items-center justify-between gap-4">
+
+                <div class="flex flex-col">
+
+                  <p class="font-poppins text-surface-gray-600">
+                    {{ doc.displayName }}
+                  </p>
+
+                  <p class="font-inter text-xs text-surface-gray-400">
+                    {{ doc.documentType }}
+                  </p>
+
+                </div>
+
+                <span class="font-inter text-xs px-3 py-1 rounded-lg bg-surface-yellow text-ui-yellow">
+                  Pendiente
+                </span>
+
+              </div>
+
+            }
+
+          </div>
+
+        </div>
+
+      }
+
+    }
+
+  </div>
+
+</div>

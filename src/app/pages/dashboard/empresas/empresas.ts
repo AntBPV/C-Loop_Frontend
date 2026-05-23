@@ -6,7 +6,7 @@ import {
   EmpresaStatus,
 } from '../../../core/services/empresas-service';
 import { EmpresaDetail } from '../../../components/empresa-detail/empresa-detail';
-import { ItemEstado, ItemCard, ItemCardData } from '../../../components/convenio-card/item-card';
+import { ItemEstado, ItemCard, ItemCardData } from '../../../components/item-card/item-card';
 import { SvgIcon } from '../../../components/svg-icon/svg-icon';
 import { EmpresaForm } from '../../../components/empresa-form/empresa-form';
 

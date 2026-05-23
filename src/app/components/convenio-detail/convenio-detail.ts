@@ -1,28 +1,10 @@
 import { Component, Input, OnChanges, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {ConveniosService,ConvenioResponse,UpdateConvenioDto} from '../../core/services/convenios-service';
 import { API_CONFIG } from '../../core/config/api.config';
 import { FormsModule } from '@angular/forms';
-
-export interface ConvenioDetail {
-  id: string;
-  code: string;
-  companyId: string;
-  companyNit: string;
-  companyBusinessName: string;
-  createdById: string;
-  currentStatus: string;
-  currentStage: string | null;
-  convenioType: string;
-  convenioTypeLabel: string;
-  rectorSignerLabel: string;
-  currentVersionId: string;
-  startDate: string | null;
-  endDate: string | null;
-  createdAt: string;
-  updatedAt: string;
-  revisionIssueCount: number;
-}
+import { EditConvenio } from '../edit-convenio/edit-convenio';
 
 export interface ConvenioHistory {
   id: string;
@@ -50,7 +32,8 @@ type TabActiva = 'info' | 'historial' | 'documentos';
 
 @Component({
   selector: 'app-convenio-detail',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, EditConvenio],
   templateUrl: './convenio-detail.html',
   styleUrl: './convenio-detail.css',
 })
@@ -60,13 +43,29 @@ export class ConvenioDetail implements OnChanges {
   tabActiva = signal<TabActiva>('info');
   isLoading = signal(true);
   error = signal<string | null>(null);
-  convenio = signal<ConvenioDetail | null>(null);
+  convenio = signal<ConvenioResponse | null>(null);
   historial = signal<ConvenioHistory[]>([]);
   isLoadingHistorial = signal(false);
   documentos = signal<ConvenioDocumento[]>([]);
   isLoadingDocumentos = signal(false);
+  showEditModal = signal(false);
+  showRequestDocumentsModal = signal(false);
+  isRequestingDocuments = signal(false);
 
-  constructor(private http: HttpClient) {}
+  editableStatuses = [
+    'BORRADOR',
+    'EMPRESA_PENDIENTE',
+    'PENDIENTE_DOCUMENTOS_EMPRESA',
+    'DOCUMENTOS_EMPRESA_RECIBIDOS',
+    'DOCUMENTOS_OBSERVADOS_EMPRESA',
+    'DOCUMENTOS_APROBADOS',
+    'LISTO_PARA_RADICAR',
+  ];
+
+  constructor(
+    private http: HttpClient,
+    private conveniosService: ConveniosService,
+  ) {}
 
   ngOnChanges() {
     if (this.convenioId) {
@@ -84,7 +83,7 @@ export class ConvenioDetail implements OnChanges {
     this.error.set(null);
 
     this.http
-      .get<ConvenioDetail>(
+      .get<ConvenioResponse>(
         `${API_CONFIG.baseUrl}${API_CONFIG.endpoints.convenios.getById(this.convenioId!)}`,
         { headers: this.getHeaders() },
       )
@@ -154,6 +153,27 @@ export class ConvenioDetail implements OnChanges {
         error: () => this.error.set('No se pudo descargar el documento.'),
       });
   }
+  onConvenioUpdated(data: ConvenioResponse) {
+    this.convenio.set(data);
+
+    this.showEditModal.set(false);
+  }
+
+  canRequestCompanyDocuments(): boolean {
+    const convenio = this.convenio();
+
+    if (!convenio) return false;
+
+    return ['BORRADOR', 'EMPRESA_PENDIENTE'].includes(convenio.currentStatus);
+  }
+
+  canEditConvenio(): boolean {
+    const convenio = this.convenio();
+
+    if (!convenio) return false;
+
+    return this.editableStatuses.includes(convenio.currentStatus);
+  }
 
   setTab(tab: TabActiva) {
     this.tabActiva.set(tab);
@@ -163,5 +183,27 @@ export class ConvenioDetail implements OnChanges {
     if (tab === 'documentos' && this.documentos().length === 0) {
       this.cargarDocumentos();
     }
+  }
+
+  requestCompanyDocuments() {
+    if (!this.convenioId) return;
+
+    this.isRequestingDocuments.set(true);
+
+    this.conveniosService.requestCompanyDocuments(this.convenioId).subscribe({
+      next: () => {
+        this.showRequestDocumentsModal.set(false);
+
+        this.isRequestingDocuments.set(false);
+
+        this.cargarConvenio();
+      },
+
+      error: () => {
+        this.error.set('No se pudo solicitar los documentos a la empresa.');
+
+        this.isRequestingDocuments.set(false);
+      },
+    });
   }
 }

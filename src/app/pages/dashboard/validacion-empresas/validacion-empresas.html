@@ -117,7 +117,8 @@
       </div>
 
       <app-empresa-detail
-        [empresaId]="empresaSeleccionadaId()">
+        [empresaId]="empresaSeleccionadaId()"
+        (empresaActualizada)="onEmpresaActualizada()">>
       </app-empresa-detail>
 
     </div>

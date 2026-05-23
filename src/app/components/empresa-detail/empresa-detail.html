@@ -9,8 +9,8 @@
 
       <!-- Header -->
       <div class="flex flex-col gap-1">
-        <p class="font-inter text-surface-gray-400 text-xs">{{ empresa()!.nit }}</p>
-        <h2 class="font-montserrat text-surface-gray-600 text-xl">{{ empresa()!.businessName }}</h2>
+        <p class="font-poppins text-surface-gray-500 text-xs">{{ empresa()!.nit }}</p>
+        <h2 class="font-poppins text-surface-gray-600 text-xl">{{ empresa()!.businessName }}</h2>
         <p class="font-poppins text-surface-gray-500 text-sm">{{ empresa()!.tradeName }}</p>
       </div>
 
@@ -20,13 +20,13 @@
       <div class="flex gap-2">
         <button
           (click)="setTab('info')"
-          class="tab-btn font-inter text-sm px-4 py-2 rounded-lg transition-colors duration-200"
+          class="tab-btn font-inter text-sm px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100 hover:cursor-pointer"
           [class.tab-active]="tabActiva() === 'info'">
           Información
         </button>
         <button
           (click)="setTab('historial')"
-          class="tab-btn font-inter text-sm px-4 py-2 rounded-lg transition-colors duration-200"
+          class="tab-btn font-inter text-sm px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100 hover:cursor-pointer"
           [class.tab-active]="tabActiva() === 'historial'">
           Historial
         </button>
@@ -71,50 +71,50 @@
               </button>
             </div>
           }
-          <div class="info-row">
-            <span class="font-inter text-surface-gray-400 text-sm">Estado</span>
-            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.status }}</span>
+          <div class="info-row font-inter">
+            <span class="text-surface-gray-500 text-sm">Estado</span>
+            <span class="text-surface-gray-600 text-sm">{{ empresa()!.status }}</span>
           </div>
-          <div class="info-row">
-            <span class="font-inter text-surface-gray-400 text-sm">NIT</span>
-            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.nit }}</span>
+          <div class="info-row font-inter">
+            <span class="text-surface-gray-500 text-sm">NIT</span>
+            <span class="text-surface-gray-600 text-sm">{{ empresa()!.nit }}</span>
           </div>
-          <div class="info-row">
-            <span class="font-inter text-surface-gray-400 text-sm">Razón social</span>
-            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.businessName }}</span>
+          <div class="info-row font-inter">
+            <span class="text-surface-gray-500 text-sm">Razón social</span>
+            <span class="text-surface-gray-600 text-sm">{{ empresa()!.businessName }}</span>
           </div>
-          <div class="info-row">
-            <span class="font-inter text-surface-gray-400 text-sm">Nombre comercial</span>
-            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.tradeName }}</span>
+          <div class="info-row font-inter">
+            <span class="text-surface-gray-500 text-sm">Nombre comercial</span>
+            <span class="text-surface-gray-600 text-sm">{{ empresa()!.tradeName }}</span>
           </div>
-          <div class="info-row">
-            <span class="font-inter text-surface-gray-400 text-sm">Representante legal</span>
-            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.legalRepresentativeName }}</span>
+          <div class="info-row font-inter">
+            <span class="text-surface-gray-500 text-sm">Representante legal</span>
+            <span class="text-surface-gray-600 text-sm">{{ empresa()!.legalRepresentativeName }}</span>
           </div>
-          <div class="info-row">
-            <span class="font-inter text-surface-gray-400 text-sm">Correo</span>
-            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.contactEmail }}</span>
+          <div class="info-row font-inter">
+            <span class="text-surface-gray-500 text-sm">Correo</span>
+            <span class="text-surface-gray-600 text-sm">{{ empresa()!.contactEmail }}</span>
           </div>
-          <div class="info-row">
-            <span class="font-inter text-surface-gray-400 text-sm">Teléfono</span>
-            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.contactPhone }}</span>
+          <div class="info-row font-inter">
+            <span class="text-surface-gray-500 text-sm">Teléfono</span>
+            <span class="text-surface-gray-600 text-sm">{{ empresa()!.contactPhone }}</span>
           </div>
-          <div class="info-row">
-            <span class="font-inter text-surface-gray-400 text-sm">Dirección</span>
-            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.address }}</span>
+          <div class="info-row font-inter">
+            <span class="text-surface-gray-500 text-sm">Dirección</span>
+            <span class="text-surface-gray-600 text-sm">{{ empresa()!.address }}</span>
           </div>
-          <div class="info-row">
-            <span class="font-inter text-surface-gray-400 text-sm">Tipo identificación</span>
-            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.identificationType }}</span>
+          <div class="info-row font-inter">
+            <span class="text-surface-gray-500 text-sm">Tipo identificación</span>
+            <span class="text-surface-gray-600 text-sm">{{ empresa()!.identificationType }}</span>
           </div>
-          <div class="info-row">
-            <span class="font-inter text-surface-gray-400 text-sm">Creado</span>
-            <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.createdAt }}</span>
+          <div class="info-row font-inter">
+            <span class="text-surface-gray-500 text-sm">Creado</span>
+            <span class="text-surface-gray-600 text-sm">{{ empresa()!.createdAt }}</span>
           </div>
           @if (empresa()!.validatedAt) {
-            <div class="info-row">
-              <span class="font-inter text-surface-gray-400 text-sm">Validado</span>
-              <span class="font-poppins text-surface-gray-600 text-sm">{{ empresa()!.validatedAt }}</span>
+            <div class="info-row font-inter">
+              <span class="text-surface-gray-500 text-sm">Validado</span>
+              <span class="text-surface-gray-600 text-sm">{{ empresa()!.validatedAt }}</span>
             </div>
           }
         </div>
@@ -129,7 +129,7 @@
                 [disabled]="isSubmitting()"
                 class="rounded-xl bg-ui-green hover:bg-ui-green-hover disabled:opacity-50 px-4 py-3 transition-opacity duration-200">
 
-                <span class="font-inter text-white text-sm">
+                <span class="font-inter text-background text-sm">
                   Aprobar
                 </span>
               </button>
@@ -169,17 +169,17 @@
             @for (entry of historial(); track entry.id) {
               <div class="flex flex-col gap-1 p-3 rounded-xl border-2 border-surface-gray-200">
                 <div class="flex items-center gap-2">
-                  <span class="font-inter text-surface-gray-400 text-xs">{{ entry.previousStatus ?? '—' }}</span>
+                  <span class="font-inter text-surface-gray-500 text-xs">{{ entry.previousStatus ?? '—' }}</span>
                   <span class="font-inter text-surface-gray-400 text-xs">→</span>
                   <span class="font-inter text-surface-gray-600 text-xs">{{ entry.newStatus }}</span>
                 </div>
                 @if (entry.comment) {
                   <p class="font-poppins text-surface-gray-500 text-xs">{{ entry.comment }}</p>
                 }
-                <p class="font-inter text-surface-gray-400 text-xs">{{ entry.performedAt }}</p>
+                <p class="font-inter text-surface-gray-500 text-xs">{{ entry.performedAt }}</p>
               </div>
             } @empty {
-              <p class="font-poppins text-surface-gray-400 text-sm">Sin historial disponible.</p>
+              <p class="font-poppins text-surface-gray-600 text-sm">Sin historial disponible.</p>
             }
           </div>
         }

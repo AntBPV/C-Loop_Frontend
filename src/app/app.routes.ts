@@ -8,6 +8,7 @@ import { Empresas } from './pages/dashboard/empresas/empresas';
 import { authGuard } from './core/guards/auth-guard';
 import { MiTrabajo } from './pages/dashboard/mi-trabajo/mi-trabajo';
 import { ValidacionEmpresas } from './pages/dashboard/validacion-empresas/validacion-empresas';
+import { PublicCompanyUpload } from './pages/public-company-upload/public-company-upload';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -22,8 +23,9 @@ export const routes: Routes = [
       { path: 'convenios', component: Convenios },
       { path: 'empresas', component: Empresas },
       { path: 'mi-trabajo', component: MiTrabajo },
-      { path: 'validacion-empresas', component: ValidacionEmpresas},
+      { path: 'validacion-empresas', component: ValidacionEmpresas },
     ],
   },
+  { path: 'public/company-upload/:token', component: PublicCompanyUpload },
   { path: '**', redirectTo: '' },
 ];

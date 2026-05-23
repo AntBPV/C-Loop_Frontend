@@ -79,8 +79,8 @@
   }
 
   @if (empresaSeleccionada()) {
-    <div class="overlay-backdrop" (click)="empresaSeleccionada.set(null)">
-      <div class="overlay-panel" (click)="$event.stopPropagation()">
+    <div class="modal-overlay" (click)="empresaSeleccionada.set(null)">
+      <div class="modal-container" (click)="$event.stopPropagation()">
         <button
           (click)="empresaSeleccionada.set(null)"
           class="absolute top-4 right-4 font-inter text-surface-gray-400 hover:text-surface-gray-600 transition-colors duration-200">

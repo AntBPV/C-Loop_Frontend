@@ -79,13 +79,17 @@
   }
 
   @if (convenioSeleccionado()) {
-    <div class="overlay-backdrop" (click)="convenioSeleccionado.set(null)">
-      <div class="overlay-panel" (click)="$event.stopPropagation()">
-        <button
-          (click)="convenioSeleccionado.set(null)"
-          class="absolute top-4 right-4 font-inter text-surface-gray-400 hover:text-surface-gray-600 transition-colors duration-200">
-          ✕
-        </button>
+    <div class="modal-overlay" (click)="convenioSeleccionado.set(null)">
+      <div
+        class="modal-container"
+        (click)="$event.stopPropagation()">
+        <div class="flex items-center justify-end">
+          <button
+            (click)="convenioSeleccionado.set(null)"
+            class="text-surface-gray-400 hover:text-ui-red hover:cursor-pointer transition-colors duration-200">
+            ✕
+          </button>
+        </div>
         <app-convenio-detail [convenioId]="convenioSeleccionado()" />
       </div>
     </div>

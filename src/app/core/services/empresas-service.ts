@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_CONFIG } from '../config/api.config';
-import { ItemEstado } from '../../components/convenio-card/item-card';
+import { ItemEstado } from '../../components/item-card/item-card';
 
 export type EmpresaStatus =
   | 'BORRADOR'
@@ -120,11 +120,11 @@ export class EmpresasService {
 
   calcularEstado(status: EmpresaStatus): ItemEstado {
     const map: Record<EmpresaStatus, ItemEstado> = {
-      BORRADOR: 'vencido',
+      BORRADOR: 'borrador',
       PENDIENTE_VALIDACION: 'atencion',
       VALIDADA: 'ok',
       OBSERVADA: 'notificacion',
-      RECHAZADA: 'por-vencer',
+      RECHAZADA: 'cancelado',
     };
     return map[status];
   }

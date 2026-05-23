@@ -35,11 +35,6 @@ export class ValidacionEmpresas implements OnInit {
       next: (data) => {
         this.empresas.set(data);
 
-        // seleccionar primera automáticamente
-        if (data.length > 0) {
-          this.empresaSeleccionadaId.set(data[0].id);
-        }
-
         this.isLoading.set(false);
       },
 
@@ -59,5 +54,11 @@ export class ValidacionEmpresas implements OnInit {
 
   cerrarDetalle() {
     this.empresaSeleccionadaId.set(null);
+  }
+
+  onEmpresaActualizada() {
+    this.cerrarDetalle();
+
+    this.cargarEmpresasPendientes();
   }
 }

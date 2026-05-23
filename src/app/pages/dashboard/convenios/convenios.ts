@@ -1,7 +1,7 @@
 import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConveniosService, ConvenioResponse } from '../../../core/services/convenios-service';
-import { ItemCard, ItemCardData, ItemEstado } from '../../../components/convenio-card/item-card';
+import { ItemCard, ItemCardData, ItemEstado } from '../../../components/item-card/item-card';
 import { ConvenioDetail } from '../../../components/convenio-detail/convenio-detail';
 import { ConvenioForm } from '../../../components/convenio-form/convenio-form';
 import { SvgIcon } from '../../../components/svg-icon/svg-icon';
@@ -90,12 +90,33 @@ export class Convenios implements OnInit {
   mapearConvenio(c: ConvenioResponse): ItemCardData {
     return {
       id: c.id,
-      titulo: c.code,
+
+      titulo: c.title,
+
+      subtitulo: c.code,
+
       campos: [
-        { label: 'Empresa', valor: c.companyBusinessName },
-        { label: 'Tipo', valor: c.convenioTypeLabel },
-        { label: 'Finaliza en', valor: c.endDate ?? 'Sin fecha' },
+        {
+          label: 'Empresa',
+          valor: c.companyBusinessName,
+        },
+
+        {
+          label: 'Tipo',
+          valor: c.convenioTypeLabel,
+        },
+
+        {
+          label: 'Estado',
+          valor: c.currentStatus,
+        },
+
+        {
+          label: 'Finaliza',
+          valor: c.endDate ?? 'Sin fecha',
+        },
       ],
+
       estado: this.conveniosService.calcularEstado(c),
     };
   }
