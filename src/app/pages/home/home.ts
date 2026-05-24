@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Hero } from '../../components/hero/hero';
-import { Navbar } from '../../components/navbar/navbar';
-import { AboutUs } from '../../components/about-us/about-us';
-import { Faq } from '../../components/faq/faq';
-import { Footer } from '../../components/footer/footer';
+import { Hero } from './hero/hero';
+import { Navbar } from './navbar/navbar';
+import { AboutUs } from './about-us/about-us';
+import { Faq } from './faq/faq';
+import { Footer } from './footer/footer';
 
 @Component({
   selector: 'app-home',

@@ -1,11 +1,11 @@
-<div class="min-h-screen bg-background flex items-center justify-center p-6">
+<div class="min-h-screen bg-surface-gray-100 flex items-center justify-center p-6">
 
-  <div class="w-full max-w-3xl rounded-3xl border-2 border-surface-gray-200 bg-background p-8 flex flex-col gap-6">
+  <div class="w-full max-w-3xl rounded-3xl border-2 border-surface-gray-200 bg-background  p-8 flex flex-col gap-6">
 
     <!-- Loading -->
     @if (isLoading()) {
 
-      <p class="font-poppins text-surface-gray-400 text-sm">
+      <p class="font-poppins text-surface-gray-500 text-sm">
         Cargando solicitud...
       </p>
 
@@ -34,13 +34,11 @@
           Convenio {{ data.convenioCode }}
         </p>
 
-        <p class="font-poppins text-surface-gray-400 text-sm">
+        <p class="font-poppins text-surface-gray-500">
           {{ data.companyName }}
         </p>
 
       </div>
-
-      <div class="separator"></div>
 
       <!-- Expirado -->
       @if (tokenExpirado()) {
@@ -60,11 +58,11 @@
 
         <div class="flex flex-col gap-4">
 
-          <div class="rounded-2xl border-2 border-surface-gray-200 p-4">
+          <div class="rounded-xl border-2 border-surface-gray-200 p-4">
 
             <div class="flex flex-col gap-2">
 
-              <p class="font-inter text-sm text-surface-gray-500">
+              <p class="font-poppins text-sm text-surface-gray-500">
                 Estado solicitud
               </p>
 
@@ -76,31 +74,72 @@
 
           </div>
 
+        <span class="separator"></span>
+
           <div class="flex flex-col gap-3">
 
-            <h2 class="font-montserrat text-lg text-surface-gray-600">
-              Documentos requeridos
+            <h2 class="font-montserrat text-lg text-surface-gray-600 text-center p-8">
+              Por favor suba <span class="text-ui-red">TODOS</span> los documentos indicados a continuación
             </h2>
 
             @for (doc of data.requiredDocuments; track doc.documentType) {
 
-              <div class="rounded-2xl border-2 border-surface-gray-200 p-4 flex items-center justify-between gap-4">
+              <div class="flex flex-col gap-3 p-4 rounded-xl border-2 border-surface-gray-200">
 
-                <div class="flex flex-col">
+                <div class="flex items-center justify-between gap-4">
 
-                  <p class="font-poppins text-surface-gray-600">
-                    {{ doc.displayName }}
-                  </p>
+                  <div class="flex flex-col">
 
-                  <p class="font-inter text-xs text-surface-gray-400">
-                    {{ doc.documentType }}
-                  </p>
+                    <p class="font-poppins text-surface-gray-600">
+                      {{ doc.displayName }}
+                    </p>
+
+                  </div>
+
+                  @if (uploadedDocuments()[doc.documentType]) {
+
+                    <span class="text-ui-green font-inter text-sm">
+                      Subido
+                    </span>
+
+                  }
 
                 </div>
 
-                <span class="font-inter text-xs px-3 py-1 rounded-lg bg-surface-yellow text-ui-yellow">
-                  Pendiente
-                </span>
+                <input
+                  type="file"
+                  accept=".pdf,.png,.jpg,.jpeg"
+                  (change)="onFileSelected($event, doc.documentType)"
+                  class="input-field hover:cursor-pointer">
+
+                @if (selectedFiles()[doc.documentType]) {
+
+                  <p class="font-inter text-xs text-surface-gray-500">
+                    {{ selectedFiles()[doc.documentType]?.name }}
+                  </p>
+
+                }
+
+                @if (documentErrors()[doc.documentType]) {
+
+                  <p class="font-inter text-xs text-ui-red">
+                    {{ documentErrors()[doc.documentType] }}
+                  </p>
+
+                }
+
+                <button
+                  (click)="uploadDocument(doc.documentType, doc.displayName)"
+                  [disabled]="uploadingDocuments()[doc.documentType]"
+                  class="px-4 py-2 rounded-xl bg-ui-blue text-background hover:bg-ui-blue-hover hover:cursor-pointer active:bg-ui-blue-active disabled:opacity-50">
+
+                  @if (uploadingDocuments()[doc.documentType]) {
+                    Subiendo...
+                  } @else {
+                    Subir documento
+                  }
+
+                </button>
 
               </div>
 

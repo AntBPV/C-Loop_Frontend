@@ -1,0 +1,174 @@
+<div class="flex flex-col gap-6">
+
+  @if (isLoading()) {
+
+    <p class="font-poppins text-surface-gray-400 text-sm">
+      Cargando documentos...
+    </p>
+
+  } @else {
+
+    @if (success()) {
+
+      <div class="rounded-2xl border-2 border-ui-green bg-surface-green p-4">
+
+        <p class="font-poppins text-ui-green text-sm">
+          {{ success() }}
+        </p>
+
+      </div>
+
+    }
+
+    @if (error()) {
+
+      <div class="rounded-2xl border-2 border-ui-red bg-surface-red p-4">
+
+        <p class="font-poppins text-ui-red text-sm">
+          {{ error() }}
+        </p>
+
+      </div>
+
+    }
+
+    <div class="flex flex-col gap-4">
+
+      @for (doc of documentos(); track doc.id) {
+
+        <div
+          class="border-2 rounded-2xl p-4 flex flex-col gap-4 transition-colors duration-200"
+          [class]="getDecisionClasses(doc.id)">
+
+          <!-- Header -->
+          <div class="flex items-start justify-between gap-4">
+
+            <div class="flex flex-col gap-1">
+
+              <p class="font-montserrat text-surface-gray-600">
+                {{ doc.displayName }}
+              </p>
+
+              <p class="font-poppins text-surface-gray-400 text-sm">
+                {{ doc.originalFilename }}
+              </p>
+
+            </div>
+
+            <span
+              class="font-inter text-xs px-2 py-1 rounded-lg"
+              [class.bg-surface-green]="doc.status === 'APROBADO'"
+              [class.text-ui-green]="doc.status === 'APROBADO'"
+              [class.bg-surface-yellow]="doc.status === 'SUBIDO'"
+              [class.text-ui-yellow]="doc.status === 'SUBIDO'"
+              [class.bg-surface-red]="doc.status === 'OBSERVADO'"
+              [class.text-ui-red]="doc.status === 'OBSERVADO'"
+              [class.bg-surface-gray-200]="!esDocumentoActivo(doc)"
+              [class.text-surface-gray-500]="!esDocumentoActivo(doc)">
+
+              {{ doc.status }}
+
+            </span>
+
+          </div>
+
+          @if (!esDocumentoActivo(doc)) {
+
+            <div class="rounded-xl bg-surface-gray-100 p-3">
+
+              <p class="font-poppins text-surface-gray-500 text-sm">
+                Este documento ya no participa en la revisión documental.
+              </p>
+
+            </div>
+
+          }
+
+          @if (esDocumentoActivo(doc) && doc.status !== 'APROBADO') {
+
+            <!-- Actions -->
+            <div class="flex items-center gap-3">
+
+              <button
+                (click)="marcarParaAprobacion(doc.id)"
+                class="px-4 py-2 rounded-xl border-2 transition-colors duration-200 hover:cursor-pointer"
+                [class]="obtenerDecision(doc.id) === 'approve'
+                  ? 'border-ui-blue bg-ui-blue text-background'
+                  : 'border-surface-gray-300 text-surface-gray-500 hover:border-ui-blue hover:text-ui-blue'">
+
+                Aprobar
+
+              </button>
+
+              <button
+                (click)="marcarParaObservacion(doc.id)"
+                class="px-4 py-2 rounded-xl border-2 transition-colors duration-200 hover:cursor-pointer"
+                [class]="obtenerDecision(doc.id) === 'observe'
+                  ? 'border-ui-red bg-ui-red text-background'
+                  : 'border-surface-gray-300 text-surface-gray-500 hover:border-ui-red hover:text-ui-red'">
+
+                Solicitar corrección
+
+              </button>
+
+            </div>
+
+            <!-- Comentario -->
+            @if (obtenerDecision(doc.id) === 'observe') {
+
+              <textarea
+                class="input-field min-h-24"
+                placeholder="Comentario de revisión"
+                [ngModel]="reviewComments()[doc.id]"
+                (ngModelChange)="actualizarComentario(doc.id, $event)">
+              </textarea>
+
+            }
+
+          }
+
+          <!-- Comentario previo -->
+          @if (doc.reviewComment) {
+
+            <div class="rounded-xl bg-surface-yellow p-3">
+
+              <p class="font-poppins text-sm text-ui-yellow">
+                {{ doc.reviewComment }}
+              </p>
+
+            </div>
+
+          }
+
+        </div>
+
+      }
+
+    </div>
+
+    <!-- Footer actions -->
+    <div class="flex items-center justify-end gap-3">
+
+      <button
+        (click)="finalizarCorrecciones()"
+        [disabled]="!puedeSolicitarCorrecciones() || isSubmitting()"
+        class="px-4 py-2 rounded-xl border-2 border-ui-red text-ui-red hover:bg-ui-red hover:text-background active:bg-ui-red-active disabled:cursor-not-allowed disabled:opacity-50 transition-colors duration-200 hover:cursor-pointer">
+
+        Solicitar correcciones
+
+      </button>
+
+      <button
+        (click)="finalizarAprobacion()"
+        [disabled]="!puedeAprobarDocumentacion() || isSubmitting()"
+        class="px-4 py-2 rounded-xl bg-ui-blue text-background hover:bg-ui-blue-hover active:bg-ui-blue-active disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 hover:cursor-pointer">
+
+        Aprobar documentación
+
+      </button>
+
+    </div>
+
+  }
+
+</div>

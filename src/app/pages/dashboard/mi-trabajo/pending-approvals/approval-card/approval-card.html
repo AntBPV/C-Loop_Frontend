@@ -1,0 +1,35 @@
+<div class="flex items-center justify-between p-4 rounded-2xl border-2 border-surface-gray-200 bg-background hover:border-ui-blue transition-colors duration-200">
+
+  <div class="flex flex-col gap-1">
+    <p class="font-montserrat text-surface-gray-600">
+      {{ approval.convenioTitle || approval.convenioCode }}
+    </p>
+    <p class="font-poppins text-surface-gray-500 text-sm">
+      {{ approval.companyName }}
+    </p>
+    <div class="flex items-center gap-2 mt-1">
+      <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-blue text-ui-blue">
+        {{ approval.stage }}
+      </span>
+      @if (approval.dueAt) {
+        <span class="font-inter text-surface-gray-500 text-xs">
+          Vence: {{ approval.dueAt | date:'dd/MM/yyyy' }}
+        </span>
+
+      }
+    </div>
+  </div>
+
+  <div class="flex flex-col items-end gap-1">
+    <span class="font-inter text-surface-gray-500 text-xs">
+      {{ approval.assignedAt | date:'dd/MM/yyyy' }}
+    </span>
+    <button
+      (click)="goToReview()"
+      class="px-3 py-2 rounded-lg border-2 border-ui-blue font-inter text-ui-blue text-xs hover:bg-ui-blue hover:text-background hover:cursor-pointer transition-colors duration-200">
+      Revisar
+    </button>
+
+  </div>
+
+</div>

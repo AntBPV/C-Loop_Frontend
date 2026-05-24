@@ -1,0 +1,39 @@
+<div class="flex flex-col gap-4">
+
+  <div class="flex items-center gap-3">
+
+    <h2 class="font-montserrat text-xl text-surface-gray-600">
+      Formalizaciones pendientes
+    </h2>
+
+    <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-red text-ui-red">
+      {{ formalizations.length }}
+    </span>
+
+  </div>
+
+  <div class="separator-gradient h-px w-full"></div>
+
+  @if (formalizations.length === 0) {
+
+    <p class="font-poppins text-surface-gray-400 text-sm">
+      No tienes formalizaciones pendientes.
+    </p>
+
+  } @else {
+
+    <div class="flex flex-col gap-3">
+
+      @for (formalization of formalizations; track formalization.convenioId) {
+
+        <app-formalization-card
+          [formalization]="formalization">
+        </app-formalization-card>
+
+      }
+
+    </div>
+
+  }
+
+</div>

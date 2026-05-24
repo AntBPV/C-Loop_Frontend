@@ -9,6 +9,7 @@ import { authGuard } from './core/guards/auth-guard';
 import { MiTrabajo } from './pages/dashboard/mi-trabajo/mi-trabajo';
 import { ValidacionEmpresas } from './pages/dashboard/validacion-empresas/validacion-empresas';
 import { PublicCompanyUpload } from './pages/public-company-upload/public-company-upload';
+import { ApprovalReview } from './pages/dashboard/approval-review/approval-review';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -24,6 +25,7 @@ export const routes: Routes = [
       { path: 'empresas', component: Empresas },
       { path: 'mi-trabajo', component: MiTrabajo },
       { path: 'validacion-empresas', component: ValidacionEmpresas },
+      { path: 'approval-review/:stepId', component: ApprovalReview },
     ],
   },
   { path: 'public/company-upload/:token', component: PublicCompanyUpload },

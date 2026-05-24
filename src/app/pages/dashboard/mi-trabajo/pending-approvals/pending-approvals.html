@@ -1,0 +1,40 @@
+<div class="flex flex-col gap-4">
+
+  <div class="flex items-center gap-3">
+
+    <h2 class="font-montserrat text-xl text-surface-gray-600">
+      Aprobaciones pendientes
+    </h2>
+
+    <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-yellow text-ui-yellow">
+      {{ approvals.length }}
+    </span>
+
+  </div>
+
+  <div class="separator-gradient h-px w-full"></div>
+
+  @if (approvals.length === 0) {
+
+    <p class="font-poppins text-surface-gray-400 text-sm">
+      No tienes aprobaciones pendientes.
+    </p>
+
+  } @else {
+
+    <div class="flex flex-col gap-3">
+
+      @for (approval of approvals; track approval.stepId) {
+
+        <app-approval-card
+          [approval]="approval"
+          (review)="onReview($event)">
+        </app-approval-card>
+
+      }
+
+    </div>
+
+  }
+
+</div>
