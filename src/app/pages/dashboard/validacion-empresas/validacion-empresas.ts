@@ -5,7 +5,7 @@ import {
   EmpresaResponse,
   PendingValidationCompany,
 } from '../../../core/services/empresas-service';
-import { EmpresaDetail } from '../../../components/empresa-detail/empresa-detail';
+import { EmpresaDetail } from '../empresas/empresa-detail/empresa-detail';
 
 @Component({
   selector: 'app-validacion-empresas',

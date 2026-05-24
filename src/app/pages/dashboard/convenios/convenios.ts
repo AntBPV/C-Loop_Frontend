@@ -2,8 +2,8 @@ import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConveniosService, ConvenioResponse } from '../../../core/services/convenios-service';
 import { ItemCard, ItemCardData, ItemEstado } from '../../../components/item-card/item-card';
-import { ConvenioDetail } from '../../../components/convenio-detail/convenio-detail';
-import { ConvenioForm } from '../../../components/convenio-form/convenio-form';
+import { ConvenioDetail } from './convenio-detail/convenio-detail';
+import { ConvenioForm } from './convenio-form/convenio-form';
 import { SvgIcon } from '../../../components/svg-icon/svg-icon';
 
 interface FiltroConfig {

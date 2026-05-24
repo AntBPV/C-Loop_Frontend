@@ -1,16 +1,8 @@
 import { Component, OnInit, signal, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService, CurrentUser } from '../../core/services/auth-service';
 import { SvgIcon } from '../svg-icon/svg-icon';
 import { CommonModule } from '@angular/common';
-import { API_CONFIG } from '../../core/config/api.config';
-
-interface UserInfo {
-  id: string;
-  fullName: string;
-  email: string;
-  roles: string[];
-}
 
 @Component({
   selector: 'app-sidebar',
@@ -20,22 +12,25 @@ interface UserInfo {
 })
 export class Sidebar implements OnInit {
   menuAbierto = signal(false);
-  usuario = signal<UserInfo | null>(null);
+  usuario = signal<CurrentUser | null>(null);
 
   constructor(
-    private http: HttpClient,
+    private authService: AuthService,
     private router: Router,
   ) {}
 
   ngOnInit() {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-    this.http
-      .get<UserInfo>(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.users.me}`, { headers })
-      .subscribe({
-        next: (data) => this.usuario.set(data),
-        error: () => {},
-      });
+    const storedUser = this.authService.getStoredUser();
+
+    if (storedUser) {
+      this.usuario.set(storedUser);
+      return;
+    }
+
+    this.authService.getCurrentUser().subscribe({
+      next: (data) => this.usuario.set(data),
+      error: () => {},
+    });
   }
 
   toggleMenu() {
@@ -45,6 +40,14 @@ export class Sidebar implements OnInit {
   cerrarSesion() {
     localStorage.removeItem('token');
     this.router.navigate(['/']);
+  }
+
+  canAccessStaffFeatures(): boolean {
+    return this.authService.hasAnyRole(['ADMIN', 'GESTOR_PROYECCION', 'REVISOR_JURIDICO']);
+  }
+
+  canAccessCompanyValidation(): boolean {
+    return this.authService.hasAnyRole(['ADMIN', 'REVISOR_JURIDICO']);
   }
 
   @HostListener('document:click', ['$event'])

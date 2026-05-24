@@ -80,8 +80,52 @@ export class AuthService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.get<CurrentUser>(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.users.me}`, {
-      headers,
-    });
+    return this.http
+      .get<CurrentUser>(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.users.me}`, {
+        headers,
+      })
+      .pipe(
+        tap((user) => {
+          this.storeUser(user);
+        }),
+      );
+  }
+
+  hasRole(role: string): boolean {
+    const user = this.getStoredUser();
+
+    if (!user) {
+      return false;
+    }
+
+    return user.roles.includes(role);
+  }
+
+  hasAnyRole(roles: string[]): boolean {
+    const user = this.getStoredUser();
+
+    if (!user) {
+      return false;
+    }
+
+    return roles.some((role) => user.roles.includes(role));
+  }
+
+  storeUser(user: CurrentUser) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  getStoredUser(): CurrentUser | null {
+    const raw = localStorage.getItem('currentUser');
+
+    if (!raw) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
   }
 }
