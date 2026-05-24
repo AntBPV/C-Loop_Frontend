@@ -33,6 +33,11 @@ export class PublicCompanyUpload implements OnInit {
 
   uploadData = signal<PublicUploadResponse | null>(null);
 
+  selectedFiles = signal<Record<string, File | null>>({});
+  uploadingDocuments = signal<Record<string, boolean>>({});
+  uploadedDocuments = signal<Record<string, boolean>>({});
+  documentErrors = signal<Record<string, string>>({});
+
   token: string | null = null;
 
   constructor(
@@ -72,6 +77,68 @@ export class PublicCompanyUpload implements OnInit {
           this.error.set('No se pudo cargar la solicitud de documentos.');
 
           this.isLoading.set(false);
+        },
+      });
+  }
+
+  onFileSelected(event: Event, documentType: string) {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files?.length) return;
+
+    const file = input.files[0];
+
+    this.selectedFiles.update((current) => ({
+      ...current,
+      [documentType]: file,
+    }));
+  }
+
+  uploadDocument(documentType: string, displayName: string) {
+    const token = this.token;
+
+    if (!token) return;
+
+    const file = this.selectedFiles()[documentType];
+
+    if (!file) return;
+
+    this.uploadingDocuments.update((current) => ({
+      ...current,
+      [documentType]: true,
+    }));
+
+    const formData = new FormData();
+
+    formData.append('documentType', documentType);
+    formData.append('displayName', displayName);
+    formData.append('file', file);
+
+    this.http
+      .post(`${API_CONFIG.baseUrl}/api/public/company-upload/${token}/documents`, formData)
+      .subscribe({
+        next: () => {
+          this.uploadedDocuments.update((current) => ({
+            ...current,
+            [documentType]: true,
+          }));
+
+          this.uploadingDocuments.update((current) => ({
+            ...current,
+            [documentType]: false,
+          }));
+        },
+
+        error: () => {
+          this.documentErrors.update((current) => ({
+            ...current,
+            [documentType]: 'No se pudo subir el documento.',
+          }));
+
+          this.uploadingDocuments.update((current) => ({
+            ...current,
+            [documentType]: false,
+          }));
         },
       });
   }

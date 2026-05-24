@@ -1,0 +1,31 @@
+<div class="flex gap-2">
+
+  <button
+    (click)="setTab('info')"
+    class="tab-btn font-inter text-sm px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100 hover:cursor-pointer"
+    [class.tab-active]="tabActiva === 'info'">
+    Información
+  </button>
+
+  <button
+    (click)="setTab('historial')"
+    class="tab-btn font-inter text-sm px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100 hover:cursor-pointer"
+    [class.tab-active]="tabActiva === 'historial'">
+    Historial
+  </button>
+
+  <button
+    (click)="setTab('documentos')"
+    class="tab-btn font-inter text-sm px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100 hover:cursor-pointer"
+    [class.tab-active]="tabActiva === 'documentos'">
+    Documentos
+  </button>
+
+  <button
+    (click)="setTab('documentos-empresa')"
+    class="tab-btn font-inter text-sm px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-surface-gray-100 hover:cursor-pointer"
+    [class.tab-active]="tabActiva === 'documentos-empresa'">
+    Documentos empresa
+  </button>
+
+</div>

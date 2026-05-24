@@ -84,23 +84,66 @@
 
             @for (doc of data.requiredDocuments; track doc.documentType) {
 
-              <div class="rounded-2xl border-2 border-surface-gray-200 p-4 flex items-center justify-between gap-4">
+              <div class="flex flex-col gap-3 p-4 rounded-2xl border-2 border-surface-gray-200">
 
-                <div class="flex flex-col">
+                <div class="flex items-center justify-between gap-4">
 
-                  <p class="font-poppins text-surface-gray-600">
-                    {{ doc.displayName }}
-                  </p>
+                  <div class="flex flex-col">
 
-                  <p class="font-inter text-xs text-surface-gray-400">
-                    {{ doc.documentType }}
-                  </p>
+                    <p class="font-poppins text-surface-gray-600">
+                      {{ doc.displayName }}
+                    </p>
+
+                    <p class="font-inter text-surface-gray-400 text-xs">
+                      {{ doc.documentType }}
+                    </p>
+
+                  </div>
+
+                  @if (uploadedDocuments()[doc.documentType]) {
+
+                    <span class="text-ui-green font-inter text-sm">
+                      Subido
+                    </span>
+
+                  }
 
                 </div>
 
-                <span class="font-inter text-xs px-3 py-1 rounded-lg bg-surface-yellow text-ui-yellow">
-                  Pendiente
-                </span>
+                <input
+                  type="file"
+                  accept=".pdf,.png,.jpg,.jpeg"
+                  (change)="onFileSelected($event, doc.documentType)"
+                  class="input-field">
+
+                @if (selectedFiles()[doc.documentType]) {
+
+                  <p class="font-inter text-xs text-surface-gray-400">
+                    {{ selectedFiles()[doc.documentType]?.name }}
+                  </p>
+
+                }
+
+                @if (documentErrors()[doc.documentType]) {
+
+                  <p class="font-inter text-xs text-ui-red">
+                    {{ documentErrors()[doc.documentType] }}
+                  </p>
+
+                }
+
+                <button
+                  (click)="uploadDocument(doc.documentType, doc.displayName)"
+                  [disabled]="uploadingDocuments()[doc.documentType]"
+                  class="px-4 py-2 rounded-xl bg-ui-blue text-white disabled:opacity-50">
+
+                  @if (uploadingDocuments()[doc.documentType]) {
+                    Subiendo...
+                  } @else {
+                    Subir documento
+                  }
+
+                </button>
 
               </div>
 

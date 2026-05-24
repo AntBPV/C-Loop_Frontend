@@ -1,0 +1,84 @@
+<div class="flex flex-col gap-3">
+
+  <div class="info-row font-inter">
+    <span class="text-surface-gray-500 text-sm">
+      Estado
+    </span>
+    <span class="text-surface-gray-600 text-sm">
+      {{ convenio.currentStatus }}
+    </span>
+  </div>
+
+  <div class="info-row font-inter">
+    <span class="text-surface-gray-500 text-sm">
+      Etapa
+    </span>
+    <span class="text-surface-gray-600 text-sm">
+      {{ convenio.currentStage ?? '—' }}
+    </span>
+  </div>
+
+  <div class="info-row font-inter">
+    <span class="text-surface-gray-500 text-sm">
+      Tipo
+    </span>
+    <span class="text-surface-gray-600 text-sm">
+      {{ convenio.convenioTypeLabel }}
+    </span>
+  </div>
+
+  <div class="info-row font-inter">
+    <span class="text-surface-gray-500 text-sm">
+      Empresa
+    </span>
+    <span class="text-surface-gray-600 text-sm">
+      {{ convenio.companyBusinessName }}
+    </span>
+  </div>
+
+  <div class="info-row font-inter">
+    <span class="text-surface-gray-500 text-sm">
+      NIT
+    </span>
+    <span class="text-surface-gray-600 text-sm">
+      {{ convenio.companyNit }}
+    </span>
+  </div>
+
+  <div class="info-row font-inter">
+    <span class="text-surface-gray-500 text-sm">
+      Duración
+    </span>
+    <span class="text-surface-gray-600 text-sm">
+      {{ convenio.durationMonths + ' meses' }}
+    </span>
+  </div>
+
+  <div class="info-row font-inter">
+    <span class="text-surface-gray-500 text-sm">
+      Rector firmante
+    </span>
+    <span class="text-surface-gray-600 text-sm">
+      {{ convenio.rectorSignerLabel }}
+    </span>
+  </div>
+
+  <div class="info-row font-inter">
+    <span class="text-surface-gray-500 text-sm">
+      Revisiones
+    </span>
+    <span class="text-surface-gray-600 text-sm">
+      {{ convenio.revisionIssueCount }}
+    </span>
+  </div>
+
+  <div class="info-row font-inter">
+    <span class="text-surface-gray-500 text-sm">
+      Creado
+    </span>
+    <span class="text-surface-gray-600 text-sm">
+      {{ convenio.createdAt }}
+    </span>
+  </div>
+
+</div>

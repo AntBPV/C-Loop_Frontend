@@ -1,0 +1,39 @@
+<div class="flex flex-col gap-3">
+  <div class="flex items-start justify-between gap-4">
+    <div class="flex flex-col gap-1">
+      <p class="font-poppins text-surface-gray-400 text-xs">
+        {{ convenio.code }}
+      </p>
+      <h2 class="font-poppins text-surface-gray-600 text-xl">
+        {{ convenio.title }}
+      </h2>
+      <p class="font-poppins text-surface-gray-500 text-sm">
+        {{ convenio.companyBusinessName }}
+      </p>
+    </div>
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="font-poppins text-xs px-2 py-1 rounded-lg bg-surface-blue text-ui-blue">
+        {{ convenio.convenioTypeLabel }}
+      </span>
+      <span class="font-poppins text-xs px-2 py-1 rounded-lg bg-surface-yellow text-ui-yellow">
+        {{ convenio.currentStatus }}
+      </span>
+    </div>
+  </div>
+  <div class="flex justify-end gap-2">
+    @if (canEdit) {
+      <button
+        (click)="edit.emit()"
+        class="px-4 py-2 rounded-lg border-2 border-ui-blue text-ui-blue font-inter text-sm hover:bg-ui-blue hover:text-background hover:cursor-pointer transition-colors duration-200">
+        Editar convenio
+      </button>
+    }
+    @if (canRequestDocuments) {
+      <button
+        (click)="requestDocuments.emit()"
+        class="px-4 py-2 rounded-lg border-2 border-ui-yellow text-ui-yellow font-inter text-sm hover:bg-ui-yellow hover:text-background hover:cursor-pointer transition-colors duration-200">
+        Solicitar documentos
+      </button>
+    }
+  </div>
+</div>
