@@ -2,10 +2,11 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardService, MyWorkResponse} from '../../../core/services/dashboard-service';
 import { PendingApprovals } from './pending-approvals/pending-approvals';
+import { PendingFormalizations } from './pending-formalizations/pending-formalizations';
 
 @Component({
   selector: 'app-mi-trabajo',
-  imports: [CommonModule, PendingApprovals],
+  imports: [CommonModule, PendingApprovals, PendingFormalizations],
   templateUrl: './mi-trabajo.html',
   styleUrl: './mi-trabajo.css',
 })

@@ -12,41 +12,9 @@
     </app-pending-approvals>
 
     <!-- Formalizaciones pendientes -->
-    <div class="flex flex-col gap-4">
-      <div class="flex items-center gap-3">
-        <h2 class="font-montserrat text-xl text-surface-gray-600">Formalizaciones pendientes</h2>
-        <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-red text-ui-red">
-          {{ data()!.pendingFormalizations.length }}
-        </span>
-      </div>
-      <div class="separator-gradient h-px w-full"></div>
-
-      @if (data()!.pendingFormalizations.length === 0) {
-        <p class="font-poppins text-surface-gray-400 text-sm">No tienes formalizaciones pendientes.</p>
-      } @else {
-        <div class="flex flex-col gap-3">
-          @for (form of data()!.pendingFormalizations; track form.convenioId) {
-            <div class="flex items-center justify-between p-4 rounded-2xl border-2 border-surface-gray-200 bg-background hover:border-ui-red transition-colors duration-200">
-              <div class="flex flex-col gap-1">
-                <p class="font-montserrat text-surface-gray-600">{{ form.convenioCode }}</p>
-                <p class="font-poppins text-surface-gray-400 text-sm">{{ form.companyName }}</p>
-                <div class="flex items-center gap-2 mt-1">
-                  <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-red text-ui-red">
-                    {{ form.status }}
-                  </span>
-                  <span class="font-inter text-xs px-2 py-1 rounded-lg bg-surface-gray-100 text-surface-gray-500">
-                    {{ form.convenioType }}
-                  </span>
-                </div>
-              </div>
-              <span class="font-inter text-surface-gray-400 text-xs">
-                {{ form.updatedAt | date:'dd/MM/yyyy' }}
-              </span>
-            </div>
-          }
-        </div>
-      }
-    </div>
+<!--    <app-pending-formalizations-->
+<!--    [formalizations]="data()!.pendingFormalizations">-->
+<!--    </app-pending-formalizations>-->
 
   }
 
