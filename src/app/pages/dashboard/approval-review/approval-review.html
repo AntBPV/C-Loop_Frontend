@@ -1,0 +1,34 @@
+<div class="flex flex-col gap-6">
+  <button
+    (click)="goBack()"
+    class="w-fit px-4 py-2 rounded-xl border-2 font-poppins border-surface-gray-300 text-surface-gray-500 hover:bg-background hover:cursor-pointer transition-colors duration-200">
+    ← Ir atrás
+  </button>
+
+  @if (isLoading()) {
+    <p class="font-poppins text-surface-gray-400">
+      Cargando revisión...
+    </p>
+  } @else if (error()) {
+    <p class="font-poppins text-ui-red">
+      {{ error() }}
+    </p>
+  } @else if (approval()) {
+
+    <app-approval-actions
+      [canApprove]="true"
+      [canRequestCorrection]="true"
+      [canReject]="true"
+      [isLoading]="isSubmitting()"
+      [error]="error()"
+      (action)="handleAction($event)">
+    </app-approval-actions>
+
+    <div class="p-6 rounded-2xl border-2 border-surface-gray-200 bg-background">
+      <app-convenio-detail
+        [convenioId]="approval()!.convenioId">
+      </app-convenio-detail>
+    </div>
+  }
+
+</div>

@@ -1,0 +1,153 @@
+<div class="flex flex-col gap-6">
+
+  <!-- Header -->
+  <div class="flex flex-col gap-1">
+    <h2 class="font-montserrat text-xl text-surface-gray-600">Crear convenio</h2>
+    <p class="font-poppins text-surface-gray-500 text-sm">Complete los campos para registrar un nuevo convenio.</p>
+  </div>
+
+  <div class="separator "></div>
+
+  <!-- Pestañas -->
+  <div class="flex gap-2">
+    <button
+      (click)="tabActiva.set('basico')"
+      class="tab-btn font-inter text-sm px-4 py-2 rounded-lg border-2 hover:bg-surface-gray-100 hover:cursor-pointer transition-colors duration-200"
+      [class.tab-active]="tabActiva() === 'basico'">
+      1. Información básica
+    </button>
+    <button
+      (click)="tab1Valido() && tabActiva.set('detalles')"
+      class="tab-btn font-inter text-sm px-4 py-2 rounded-lg border-2 hover:bg-surface-gray-100 hover:cursor-pointer transition-colors duration-200"
+      [class.tab-active]="tabActiva() === 'detalles'"
+      [class.opacity-40]="!tab1Valido()">
+      2. Detalles
+    </button>
+  </div>
+
+  <!-- Error -->
+  @if (error()) {
+    <div class="px-4 py-3 rounded-lg bg-surface-red border-2 border-ui-red">
+      <p class="font-inter text-ui-red text-sm">{{ error() }}</p>
+    </div>
+  }
+
+  <!-- Tab 1: Información básica -->
+  @if (tabActiva() === 'basico') {
+    <div class="flex flex-col gap-4">
+
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Título del convenio</label>
+        <input
+          type="text"
+          [(ngModel)]="form.title"
+          placeholder="Ej: Convenio de práctica empresarial"
+          class="input-field" />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm ">Tipo de convenio</label>
+        <select [(ngModel)]="form.convenioType" class="input-field hover:cursor-pointer">
+          <option value="">Selecciona un tipo</option>
+          @for (tipo of tiposConvenio; track tipo.value) {
+            <option [value]="tipo.value">{{ tipo.label }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Duración (meses)</label>
+        <input
+          type="number"
+          [(ngModel)]="form.durationMonths"
+          min="1"
+          class="input-field" />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Empresa</label>
+        @if (isLoadingEmpresas()) {
+          <p class="font-poppins text-surface-gray-400 text-sm">Cargando empresas...</p>
+        } @else {
+          <select [(ngModel)]="form.companyId" class="input-field hover:cursor-pointer">
+            <option value="">Selecciona una empresa</option>
+            @for (empresa of empresas(); track empresa.id) {
+              <option [value]="empresa.id">{{ empresa.businessName }}</option>
+            }
+          </select>
+        }
+      </div>
+
+      <button
+        (click)="siguienteTab()"
+        [disabled]="!tab1Valido()"
+        class="w-full py-2 rounded-lg bg-ui-blue font-inter text-background text-sm transition-colors duration-200
+        hover:bg-ui-blue-hover hover:cursor-pointer active:bg-ui-blue-active disabled:cursor-not-allowed disabled:opacity-50 mt-2">
+        Siguiente →
+      </button>
+
+    </div>
+  }
+
+  <!-- Tab 2: Detalles -->
+  @if (tabActiva() === 'detalles') {
+    <div class="flex flex-col gap-4">
+
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Objetivo</label>
+        <textarea
+          [(ngModel)]="form.objective"
+          rows="3"
+          placeholder="Describe el objetivo del convenio..."
+          class="input-field resize-none">
+        </textarea>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Descripción</label>
+        <textarea
+          [(ngModel)]="form.description"
+          rows="3"
+          placeholder="Describe el convenio..."
+          class="input-field resize-none">
+        </textarea>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Obligaciones de la entidad externa</label>
+        <textarea
+          [(ngModel)]="form.externalEntityObligations"
+          rows="3"
+          placeholder="Describe las obligaciones de la entidad externa..."
+          class="input-field resize-none">
+        </textarea>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-inter text-surface-gray-600 text-sm">Obligaciones de la universidad</label>
+        <textarea
+          [(ngModel)]="form.universityObligations"
+          rows="3"
+          placeholder="Describe las obligaciones de la universidad..."
+          class="input-field resize-none">
+        </textarea>
+      </div>
+
+      <div class="flex gap-3 mt-2">
+        <button
+          (click)="tabActiva.set('basico')"
+          class="flex-1 py-2 rounded-lg border-2 border-surface-gray-200 font-inter text-surface-gray-500 text-sm transition-colors duration-200 hover:border-surface-gray-300 active:bg-surface-gray-100 hover:cursor-pointer">
+          ← Anterior
+        </button>
+        <button
+          (click)="onSubmit()"
+          [disabled]="!tab2Valido() || isLoading()"
+          class="flex-1 py-2 rounded-lg bg-ui-blue font-inter text-white text-sm transition-colors duration-200 hover:bg-ui-blue-hover active:bg-ui-blue-active hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-50">
+          {{ isLoading() ? 'Creando...' : 'Crear convenio' }}
+        </button>
+      </div>
+
+    </div>
+  }
+
+</div>

@@ -1,0 +1,80 @@
+@if (convenioId) {
+
+  <div class="detail-panel flex flex-col gap-6">
+
+    @if (isLoading()) {
+
+      <p class="font-poppins text-surface-gray-400 text-sm">
+        Cargando...
+      </p>
+
+    } @else if (error()) {
+
+      <p class="font-poppins text-ui-red text-sm">
+        {{ error() }}
+      </p>
+
+    } @else if (convenio()) {
+
+      <app-convenio-header
+        [convenio]="convenio()!"
+        (edit)="showEditModal.set(true)"
+        (requestDocuments)="showRequestDocumentsModal.set(true)"
+        (submitted)="cargarConvenio()">
+      </app-convenio-header>
+
+      <div class="separator h-px w-full"></div>
+
+      <app-convenio-tabs
+        [tabActiva]="tabActiva()"
+        (tabChange)="setTab($event)">
+      </app-convenio-tabs>
+
+      @if (tabActiva() === 'info') {
+        <app-convenio-info
+          [convenio]="convenio()!">
+        </app-convenio-info>
+      }
+
+      @if (tabActiva() === 'historial') {
+        <app-convenio-history
+          [historial]="historial()"
+          [isLoading]="isLoadingHistorial()">
+        </app-convenio-history>
+      }
+
+      @if (tabActiva() === 'documentos') {
+        <app-convenio-documents
+          [documentos]="documentos()"
+          [isLoading]="isLoadingDocumentos()"
+          (descargar)="descargarDocumento($event)">
+        </app-convenio-documents>
+      }
+
+      @if (tabActiva() === 'documentos-empresa') {
+        <app-convenio-document-review
+          [convenioId]="convenioId!">
+        </app-convenio-document-review>
+      }
+    }
+  </div>
+
+}
+
+@if (showEditModal()) {
+  <app-edit-convenio
+    [convenio]="convenio()!"
+    (cerrar)="showEditModal.set(false)"
+    (actualizado)="onConvenioUpdated($event)">
+  </app-edit-convenio>
+}
+
+@if (showRequestDocumentsModal()) {
+
+  <app-convenio-request-documents
+    [convenioId]="convenioId!"
+    (cerrar)="showRequestDocumentsModal.set(false)"
+    (requested)="cargarConvenio()">
+  </app-convenio-request-documents>
+
+}

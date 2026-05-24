@@ -36,32 +36,35 @@
       <span class="font-poppins">Empresas</span>
     </a>
 
-    <a
-      routerLink="mi-trabajo"
-      routerLinkActive="nav-item-active"
-      #miTrabajoLink="routerLinkActive"
-      class="nav-item">
-      <span class="text-2xl">
-        <app-svg-icon
-          [src]="miTrabajoLink.isActive ? 'icons/trabajo-button-active.svg' : 'icons/trabajo-button.svg'"
-          color="currentColor"/>
-      </span>
-      <span class="font-poppins">Mi Trabajo</span>
-    </a>
+    @if (canAccessStaffFeatures()) {
+      <a
+        routerLink="mi-trabajo"
+        routerLinkActive="nav-item-active"
+        #miTrabajoLink="routerLinkActive"
+        class="nav-item">
+        <span class="text-2xl">
+          <app-svg-icon
+            [src]="miTrabajoLink.isActive ? 'icons/trabajo-button-active.svg' : 'icons/trabajo-button.svg'"
+            color="currentColor"/>
+        </span>
+        <span class="font-poppins">Mi Trabajo</span>
+      </a>
+    }
 
-    <a
-      routerLink="validacion-empresas"
-      routerLinkActive="nav-item-active"
-      #validarEmpresaLink="routerLinkActive"
-      class="nav-item">
-      <span class="text-2xl">
-        <app-svg-icon
-          [src]="validarEmpresaLink.isActive ? 'icons/validar-button-active.svg' : 'icons/validar-button.svg'"
-          color="currentColor"/>
-      </span>
-      <span class="font-poppins">Validar Empresas</span>
-    </a>
-
+    @if (canAccessCompanyValidation()) {
+      <a
+        routerLink="validacion-empresas"
+        routerLinkActive="nav-item-active"
+        #validarEmpresaLink="routerLinkActive"
+        class="nav-item">
+        <span class="text-2xl">
+          <app-svg-icon
+            [src]="validarEmpresaLink.isActive ? 'icons/validar-button-active.svg' : 'icons/validar-button.svg'"
+            color="currentColor"/>
+        </span>
+        <span class="font-poppins">Validar Empresas</span>
+      </a>
+    }
   </div>
 
   <!-- Spacer -->
