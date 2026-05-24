@@ -20,16 +20,18 @@ export class Sidebar implements OnInit {
   ) {}
 
   ngOnInit() {
-    const storedUser = this.authService.getStoredUser();
-
-    if (storedUser) {
-      this.usuario.set(storedUser);
-      return;
+    const cachedUser = this.authService.getStoredUser();
+    if (cachedUser) {
+      this.usuario.set(cachedUser);
     }
 
     this.authService.getCurrentUser().subscribe({
-      next: (data) => this.usuario.set(data),
-      error: () => {},
+      next: (data) => {
+        this.usuario.set(data);
+      },
+      error: () => {
+        this.cerrarSesion();
+      },
     });
   }
 
@@ -38,16 +40,24 @@ export class Sidebar implements OnInit {
   }
 
   cerrarSesion() {
-    localStorage.removeItem('token');
+    this.authService.logout(); // Limpia token Y currentUser
     this.router.navigate(['/']);
   }
 
   canAccessStaffFeatures(): boolean {
-    return this.authService.hasAnyRole(['ADMIN', 'GESTOR_PROYECCION', 'REVISOR_JURIDICO']);
+    const user = this.usuario();
+    if (!user || !user.roles) return false;
+
+    const allowedRoles = ['ADMIN', 'GESTOR_PROYECCION', 'REVISOR_JURIDICO'];
+    return user.roles.some((role) => allowedRoles.includes(role));
   }
 
   canAccessCompanyValidation(): boolean {
-    return this.authService.hasAnyRole(['ADMIN', 'REVISOR_JURIDICO']);
+    const user = this.usuario();
+    if (!user || !user.roles) return false;
+
+    const allowedRoles = ['ADMIN', 'REVISOR_JURIDICO'];
+    return user.roles.some((role) => allowedRoles.includes(role));
   }
 
   @HostListener('document:click', ['$event'])
