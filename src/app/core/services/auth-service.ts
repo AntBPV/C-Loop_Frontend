@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_CONFIG } from '../config/api.config';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 export interface RequestCodePayload {
   email: string;
@@ -73,19 +73,19 @@ export class AuthService {
       );
   }
 
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
+  }
+
   getCurrentUser(): Observable<CurrentUser> {
     const token = localStorage.getItem('token');
-
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     return this.http
-      .get<CurrentUser>(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.users.me}`, {
-        headers,
-      })
+      .get<CurrentUser>(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.users.me}`, { headers })
       .pipe(
-        tap((user) => {
+        tap((user: CurrentUser) => {
           this.storeUser(user);
         }),
       );
